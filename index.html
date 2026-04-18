@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>中文 Travel</title>
+
+<!-- iOS PWA meta tags -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="中文">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a1208">
+
+<!-- Inline SVG favicon / app icon (red seal with 中) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%23c0392b'/><text x='90' y='128' font-size='110' text-anchor='middle' font-family='PingFang SC,sans-serif' font-weight='700' fill='%23f5efe3'>中</text></svg>">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%23c0392b'/><text x='90' y='128' font-size='110' text-anchor='middle' font-family='PingFang SC,sans-serif' font-weight='700' fill='%23f5efe3'>中</text></svg>">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1208;
+    --paper: #f5efe3;
+    --red: #c0392b;
+    --gold: #b8960c;
+    --muted: #7a6e5f;
+    --border: #d4c8b0;
+    --card-bg: #faf6ee;
+
+    /* System font stacks - no external fonts needed */
+    --font-hanzi: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Heiti SC", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Menlo", "Monaco", monospace;
+    --font-serif: "New York", "Iowan Old Style", Georgia, serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    min-height: 100vh;
+    padding: calc(env(safe-area-inset-top) + 2rem) calc(env(safe-area-inset-right) + 1rem) calc(env(safe-area-inset-bottom) + 4rem) calc(env(safe-area-inset-left) + 1rem);
+    background-image:
+      radial-gradient(ellipse at 10% 0%, rgba(192,57,43,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 100%, rgba(184,150,12,0.07) 0%, transparent 50%);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .header-rule {
+    width: 60px;
+    height: 3px;
+    background: var(--red);
+    margin: 0 auto 1.2rem;
+  }
+
+  h1 {
+    font-family: var(--font-hanzi);
+    font-size: clamp(2.2rem, 6vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    font-family: var(--font-serif); font-style: italic;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--muted);
+    margin-top: 0.6rem;
+    letter-spacing: 0.03em;
+  }
+
+  .section {
+    max-width: 860px;
+    margin: 0 auto 2.8rem;
+  }
+
+  .section-title {
+    font-family: var(--font-hanzi);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red);
+    border-left: 3px solid var(--red);
+    padding-left: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1rem 1.1rem;
+    position: relative;
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,18,8,0.09);
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card:active { transform: translateY(0); }
+
+  .card.speaking {
+    background: #fff8e6;
+    border-color: var(--gold);
+  }
+  .card.speaking::before { opacity: 1; }
+
+  .speaker {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.35;
+    transition: opacity 0.15s;
+    color: var(--muted);
+  }
+  .card:hover .speaker { opacity: 0.8; }
+  .card.speaking .speaker { opacity: 1; color: var(--red); }
+  .speaker svg { width: 14px; height: 14px; }
+
+  .hanzi {
+    font-family: var(--font-hanzi);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+
+  .pinyin {
+    font-size: 0.72rem;
+    color: var(--red);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+  }
+
+  .meaning {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: var(--font-serif); font-style: italic;
+    font-style: italic;
+  }
+
+  .tip-box {
+    max-width: 860px;
+    margin: 0 auto;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 4px;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    font-size: 0.78rem;
+    line-height: 1.7;
+  }
+  .tip-box .icon { font-size: 1.3rem; flex-shrink: 0; }
+  .tip-box strong { color: var(--gold); }
+
+  @media (max-width: 500px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    .phrase-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Phrase cards - wider, different layout */
+  .phrase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .phrase-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 1rem 1.2rem;
+    position: relative;
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .phrase-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,18,8,0.09);
+    border-left-color: var(--red);
+  }
+  .phrase-card:active { transform: translateY(0); }
+  .phrase-card.speaking {
+    background: #fff8e6;
+    border-left-color: var(--red);
+  }
+
+  .phrase-hanzi {
+    font-family: var(--font-hanzi);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 0.35rem;
+    padding-right: 1.8rem;
+  }
+
+  .phrase-pinyin {
+    font-size: 0.72rem;
+    color: var(--red);
+    letter-spacing: 0.06em;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+  }
+
+  .phrase-meaning {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: var(--font-serif); font-style: italic;
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  .phrase-card .speaker {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
+  /* Tabs */
+  .tabs {
+    max-width: 860px;
+    margin: 0 auto 2rem;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.35rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 0.7rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+
+  .tab:hover { color: var(--ink); }
+
+  .tab.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .tab .tab-hanzi {
+    font-family: var(--font-hanzi);
+    margin-right: 0.35rem;
+    font-size: 0.95rem;
+    letter-spacing: 0;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn 0.25s ease-out; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Install hint banner (shown only in Safari, not standalone) */
+  .install-hint {
+    max-width: 860px;
+    margin: 0 auto 1.5rem;
+    background: #fff4da;
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    font-size: 0.78rem;
+    color: var(--ink);
+    line-height: 1.5;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    position: relative;
+  }
+  .install-hint strong { color: var(--red); }
+  .install-hint .close-hint {
+    position: absolute;
+    top: 0.5rem; right: 0.6rem;
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+  }
+  /* Hide when in standalone mode */
+  @media (display-mode: standalone) {
+    .install-hint { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-rule"></div>
+  <h1>中文 App 词汇</h1>
+  <p class="subtitle">Essential Chinese for navigating apps & digital life</p>
+  <p class="subtitle" style="margin-top:0.3rem; font-size:0.8rem;">🔊 Tap any card to hear it spoken</p>
+</header>
+
+<div class="install-hint" id="installHint">
+  <span style="font-size:1.1rem;">📱</span>
+  <span><strong>Works offline!</strong> Tap Safari's Share button → <strong>Add to Home Screen</strong> to install as an app. Perfect for your trip.</span>
+  <button class="close-hint" onclick="this.parentElement.style.display='none'; try{localStorage.setItem('hintDismissed','1')}catch(e){}">✕</button>
+</div>
+
+<div class="tabs" role="tablist">
+  <button class="tab active" data-tab="vocab" role="tab"><span class="tab-hanzi">词汇</span>Vocabulary</button>
+  <button class="tab" data-tab="phrases" role="tab"><span class="tab-hanzi">短语</span>Travel Phrases</button>
+</div>
+
+<div class="tab-panel active" id="tab-vocab">
+
+<!-- NAVIGATION -->
+<div class="section">
+  <div class="section-title">Navigation & Structure</div>
+  <div class="grid">
+    <div class="card"><div class="hanzi">主页</div><div class="pinyin">zhǔ yè</div><div class="meaning">Home / Homepage</div></div>
+    <div class="card"><div class="hanzi">首页</div><div class="pinyin">shǒu yè</div><div class="meaning">Home (main page)</div></div>
+    <div class="card"><div class="hanzi">返回</div><div class="pinyin">fǎn huí</div><div class="meaning">Back / Return</div></div>
+    <div class="card"><div class="hanzi">菜单</div><div class="pinyin">cài dān</div><div class="meaning">Menu</div></div>
+    <div class="card"><div class="hanzi">设置</div><div class="pinyin">shè zhì</div><div class="meaning">Settings</div></div>
+    <div class="card"><div class="hanzi">搜索</div><div class="pinyin">sōu suǒ</div><div class="meaning">Search</div></div>
+    <div class="card"><div class="hanzi">更多</div><div class="pinyin">gèng duō</div><div class="meaning">More</div></div>
+    <div class="card"><div class="hanzi">关闭</div><div class="pinyin">guān bì</div><div class="meaning">Close</div></div>
+  </div>
+</div>
+
+<!-- ACTIONS -->
+<div class="section">
+  <div class="section-title">Actions & Buttons</div>
+  <div class="grid">
+    <div class="card"><div class="hanzi">确认</div><div class="pinyin">què rèn</div><div class="meaning">Confirm / OK</div></div>
+    <div class="card"><div class="hanzi">取消</div><div class="pinyin">qǔ xiāo</div><div class="meaning">Cancel</div></div>
+    <div class="card"><div class="hanzi">提交</div><div class="pinyin">tí jiāo</div><div class="meaning">Submit</div></div>
+    <div class="card"><div class="hanzi">下载</div><div class="pinyin">xià zài</div><div class="meaning">Download</div></div>
+    <div class="card"><div class="hanzi">上传</div><div class="pinyin">shàng chuán</div><div class="meaning">Upload</div></div>
+    <div class="card"><div class="hanzi">分享</div><div class="pinyin">fēn xiǎng</div><div class="meaning">Share</div></div>
+    <div class="card"><div class="hanzi">删除</div><div class="pinyin">shān chú</div><div class="meaning">Delete</div></div>
+    <div class="card"><div class="hanzi">编辑</div><div class="pinyin">biān jí</div><div class="meaning">Edit</div></div>
+    <div class="card"><div class="hanzi">保存</div><div class="pinyin">bǎo cún</div><div class="meaning">Save</div></div>
+    <div class="card"><div class="hanzi">刷新</div><div class="pinyin">shuā xīn</div><div class="meaning">Refresh / Reload</div></div>
+    <div class="card"><div class="hanzi">复制</div><div class="pinyin">fù zhì</div><div class="meaning">Copy</div></div>
+    <div class="card"><div class="hanzi">粘贴</div><div class="pinyin">zhān tiē</div><div class="meaning">Paste</div></div>
+  </div>
+</div>
+
+<!-- ACCOUNT & PAYMENTS -->
+<div class="section">
+  <div class="section-title">Account & Payments</div>
+  <div class="grid">
+    <div class="card"><div class="hanzi">登录</div><div class="pinyin">dēng lù</div><div class="meaning">Log in</div></div>
+    <div class="card"><div class="hanzi">注册</div><div class="pinyin">zhù cè</div><div class="meaning">Register / Sign up</div></div>
+    <div class="card"><div class="hanzi">退出</div><div class="pinyin">tuì chū</div><div class="meaning">Log out / Exit</div></div>
+    <div class="card"><div class="hanzi">密码</div><div class="pinyin">mì mǎ</div><div class="meaning">Password</div></div>
+    <div class="card"><div class="hanzi">账号</div><div class="pinyin">zhàng hào</div><div class="meaning">Account</div></div>
+    <div class="card"><div class="hanzi">支付</div><div class="pinyin">zhī fù</div><div class="meaning">Pay / Payment</div></div>
+    <div class="card"><div class="hanzi">付款</div><div class="pinyin">fù kuǎn</div><div class="meaning">Make a payment</div></div>
+    <div class="card"><div class="hanzi">余额</div><div class="pinyin">yú é</div><div class="meaning">Balance</div></div>
+    <div class="card"><div class="hanzi">订单</div><div class="pinyin">dìng dān</div><div class="meaning">Order</div></div>
+    <div class="card"><div class="hanzi">优惠券</div><div class="pinyin">yōu huì quàn</div><div class="meaning">Coupon / Voucher</div></div>
+  </div>
+</div>
+
+<!-- NOTIFICATIONS & STATUS -->
+<div class="section">
+  <div class="section-title">Notifications & Status</div>
+  <div class="grid">
+    <div class="card"><div class="hanzi">通知</div><div class="pinyin">tōng zhī</div><div class="meaning">Notification</div></div>
+    <div class="card"><div class="hanzi">消息</div><div class="pinyin">xiāo xi</div><div class="meaning">Message</div></div>
+    <div class="card"><div class="hanzi">成功</div><div class="pinyin">chéng gōng</div><div class="meaning">Success</div></div>
+    <div class="card"><div class="hanzi">失败</div><div class="pinyin">shī bài</div><div class="meaning">Failed / Error</div></div>
+    <div class="card"><div class="hanzi">加载中</div><div class="pinyin">jiā zài zhōng</div><div class="meaning">Loading…</div></div>
+    <div class="card"><div class="hanzi">错误</div><div class="pinyin">cuò wù</div><div class="meaning">Error</div></div>
+    <div class="card"><div class="hanzi">已完成</div><div class="pinyin">yǐ wán chéng</div><div class="meaning">Completed</div></div>
+    <div class="card"><div class="hanzi">待处理</div><div class="pinyin">dài chǔ lǐ</div><div class="meaning">Pending</div></div>
+  </div>
+</div>
+
+<!-- MAPS & TRANSPORT -->
+<div class="section">
+  <div class="section-title">Maps, Transport & Daily Life</div>
+  <div class="grid">
+    <div class="card"><div class="hanzi">地图</div><div class="pinyin">dì tú</div><div class="meaning">Map</div></div>
+    <div class="card"><div class="hanzi">导航</div><div class="pinyin">dǎo háng</div><div class="meaning">Navigation / GPS</div></div>
+    <div class="card"><div class="hanzi">出发</div><div class="pinyin">chū fā</div><div class="meaning">Depart / Start</div></div>
+    <div class="card"><div class="hanzi">到达</div><div class="pinyin">dào dá</div><div class="meaning">Arrive / Destination</div></div>
+    <div class="card"><div class="hanzi">附近</div><div class="pinyin">fù jìn</div><div class="meaning">Nearby</div></div>
+    <div class="card"><div class="hanzi">扫码</div><div class="pinyin">sǎo mǎ</div><div class="meaning">Scan QR code</div></div>
+    <div class="card"><div class="hanzi">外卖</div><div class="pinyin">wài mài</div><div class="meaning">Food delivery</div></div>
+    <div class="card"><div class="hanzi">评价</div><div class="pinyin">píng jià</div><div class="meaning">Review / Rating</div></div>
+  </div>
+</div>
+
+</div><!-- end tab-vocab -->
+
+<div class="tab-panel" id="tab-phrases">
+
+<!-- TRAVEL PHRASES -->
+<div class="section">
+  <div class="section-title">Essentials & Greetings</div>
+  <div class="phrase-grid">
+    <div class="phrase-card"><div class="phrase-hanzi">你好</div><div class="phrase-pinyin">nǐ hǎo</div><div class="phrase-meaning">Hello</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">谢谢</div><div class="phrase-pinyin">xiè xie</div><div class="phrase-meaning">Thank you</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">不客气</div><div class="phrase-pinyin">bù kè qi</div><div class="phrase-meaning">You're welcome</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">对不起</div><div class="phrase-pinyin">duì bu qǐ</div><div class="phrase-meaning">Sorry / Excuse me</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">没关系</div><div class="phrase-pinyin">méi guān xi</div><div class="phrase-meaning">It's okay / No problem</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">再见</div><div class="phrase-pinyin">zài jiàn</div><div class="phrase-meaning">Goodbye</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">是</div><div class="phrase-pinyin">shì</div><div class="phrase-meaning">Yes</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">不是</div><div class="phrase-pinyin">bú shì</div><div class="phrase-meaning">No</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">我不懂</div><div class="phrase-pinyin">wǒ bù dǒng</div><div class="phrase-meaning">I don't understand</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">你会说英语吗?</div><div class="phrase-pinyin">nǐ huì shuō yīng yǔ ma?</div><div class="phrase-meaning">Do you speak English?</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">请再说一遍</div><div class="phrase-pinyin">qǐng zài shuō yí biàn</div><div class="phrase-meaning">Please say it again</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">请等一下</div><div class="phrase-pinyin">qǐng děng yí xià</div><div class="phrase-meaning">Please wait a moment</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Directions & Transport</div>
+  <div class="phrase-grid">
+    <div class="phrase-card"><div class="phrase-hanzi">厕所在哪里?</div><div class="phrase-pinyin">cè suǒ zài nǎ lǐ?</div><div class="phrase-meaning">Where is the toilet?</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">地铁站在哪里?</div><div class="phrase-pinyin">dì tiě zhàn zài nǎ lǐ?</div><div class="phrase-meaning">Where is the subway station?</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">我想去这里</div><div class="phrase-pinyin">wǒ xiǎng qù zhè lǐ</div><div class="phrase-meaning">I want to go here (show on map)</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">多远?</div><div class="phrase-pinyin">duō yuǎn?</div><div class="phrase-meaning">How far?</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">请带我去这个地址</div><div class="phrase-pinyin">qǐng dài wǒ qù zhè ge dì zhǐ</div><div class="phrase-meaning">Please take me to this address</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">停在这里</div><div class="phrase-pinyin">tíng zài zhè lǐ</div><div class="phrase-meaning">Stop here</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">火车站</div><div class="phrase-pinyin">huǒ chē zhàn</div><div class="phrase-meaning">Train station</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">机场</div><div class="phrase-pinyin">jī chǎng</div><div class="phrase-meaning">Airport</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">出租车</div><div class="phrase-pinyin">chū zū chē</div><div class="phrase-meaning">Taxi</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">高铁</div><div class="phrase-pinyin">gāo tiě</div><div class="phrase-meaning">High-speed rail</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Food & Restaurants</div>
+  <div class="phrase-grid">
+    <div class="phrase-card"><div class="phrase-hanzi">菜单</div><div class="phrase-pinyin">cài dān</div><div class="phrase-meaning">Menu</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">我要这个</div><div class="phrase-pinyin">wǒ yào zhè ge</div><div class="phrase-meaning">I want this (point at menu)</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">不要辣</div><div class="phrase-pinyin">bú yào là</div><div class="phrase-meaning">Not spicy</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">微辣</div><div class="phrase-pinyin">wēi là</div><div class="phrase-meaning">Mildly spicy</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">我吃素</div><div class="phrase-pinyin">wǒ chī sù</div><div class="phrase-meaning">I'm vegetarian</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">我对...过敏</div><div class="phrase-pinyin">wǒ duì... guò mǐn</div><div class="phrase-meaning">I'm allergic to…</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">一瓶水</div><div class="phrase-pinyin">yì píng shuǐ</div><div class="phrase-meaning">A bottle of water</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">买单</div><div class="phrase-pinyin">mǎi dān</div><div class="phrase-meaning">The bill, please</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">很好吃</div><div class="phrase-pinyin">hěn hǎo chī</div><div class="phrase-meaning">Very delicious</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">打包</div><div class="phrase-pinyin">dǎ bāo</div><div class="phrase-meaning">To take away / To go</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Shopping & Money</div>
+  <div class="phrase-grid">
+    <div class="phrase-card"><div class="phrase-hanzi">多少钱?</div><div class="phrase-pinyin">duō shǎo qián?</div><div class="phrase-meaning">How much does it cost?</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">太贵了</div><div class="phrase-pinyin">tài guì le</div><div class="phrase-meaning">Too expensive</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">便宜一点</div><div class="phrase-pinyin">pián yi yì diǎn</div><div class="phrase-meaning">A bit cheaper, please</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">可以刷卡吗?</div><div class="phrase-pinyin">kě yǐ shuā kǎ ma?</div><div class="phrase-meaning">Can I pay by card?</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">支付宝可以吗?</div><div class="phrase-pinyin">zhī fù bǎo kě yǐ ma?</div><div class="phrase-meaning">Can I pay with Alipay?</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">微信支付</div><div class="phrase-pinyin">wēi xìn zhī fù</div><div class="phrase-meaning">WeChat Pay</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">现金</div><div class="phrase-pinyin">xiàn jīn</div><div class="phrase-meaning">Cash</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">发票</div><div class="phrase-pinyin">fā piào</div><div class="phrase-meaning">Receipt / Invoice</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Emergencies & Help</div>
+  <div class="phrase-grid">
+    <div class="phrase-card"><div class="phrase-hanzi">救命!</div><div class="phrase-pinyin">jiù mìng!</div><div class="phrase-meaning">Help! (emergency)</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">请帮我</div><div class="phrase-pinyin">qǐng bāng wǒ</div><div class="phrase-meaning">Please help me</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">我生病了</div><div class="phrase-pinyin">wǒ shēng bìng le</div><div class="phrase-meaning">I'm sick</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">医院在哪里?</div><div class="phrase-pinyin">yī yuàn zài nǎ lǐ?</div><div class="phrase-meaning">Where is the hospital?</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">叫救护车</div><div class="phrase-pinyin">jiào jiù hù chē</div><div class="phrase-meaning">Call an ambulance</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">叫警察</div><div class="phrase-pinyin">jiào jǐng chá</div><div class="phrase-meaning">Call the police</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">我的护照丢了</div><div class="phrase-pinyin">wǒ de hù zhào diū le</div><div class="phrase-meaning">I lost my passport</div></div>
+    <div class="phrase-card"><div class="phrase-hanzi">意大利大使馆</div><div class="phrase-pinyin">yì dà lì dà shǐ guǎn</div><div class="phrase-meaning">Italian embassy</div></div>
+  </div>
+</div>
+
+</div><!-- end tab-phrases -->
+
+<div class="tip-box">
+  <span class="icon">💡</span>
+  <span><strong>Tip:</strong> In Chinese apps, <strong>确认 (quèrèn)</strong> and <strong>取消 (qǔxiāo)</strong> are often swapped compared to Western UI conventions — read carefully before tapping! <strong>扫码 (sǎo mǎ)</strong> is everywhere: metro, restaurants, shops, bikes.</span>
+</div>
+
+<script>
+  // Hide install hint if already dismissed or running standalone
+  (function() {
+    const hint = document.getElementById('installHint');
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+                      || window.navigator.standalone === true;
+    let dismissed = false;
+    try { dismissed = localStorage.getItem('hintDismissed') === '1'; } catch(e) {}
+    if (isStandalone || dismissed) hint.style.display = 'none';
+  })();
+
+  // Tab switching
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.tab-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      tabs.forEach(t => t.classList.toggle('active', t === tab));
+      panels.forEach(p => p.classList.toggle('active', p.id === 'tab-' + target));
+      // Stop any ongoing speech when switching tabs
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      document.querySelectorAll('.speaking').forEach(el => el.classList.remove('speaking'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // Add speaker icon to every card (vocab + phrases)
+  const speakerSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+  document.querySelectorAll('.card, .phrase-card').forEach(card => {
+    const icon = document.createElement('div');
+    icon.className = 'speaker';
+    icon.innerHTML = speakerSVG;
+    card.appendChild(icon);
+  });
+
+  // TTS setup
+  const synth = window.speechSynthesis;
+  let zhVoice = null;
+
+  function pickVoice() {
+    const voices = synth.getVoices();
+    // Prefer zh-CN voices
+    zhVoice = voices.find(v => v.lang === 'zh-CN')
+           || voices.find(v => v.lang.startsWith('zh-CN'))
+           || voices.find(v => v.lang.startsWith('zh'))
+           || null;
+  }
+  pickVoice();
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = pickVoice;
+  }
+
+  let currentCard = null;
+
+  function speak(text, card) {
+    if (!synth) {
+      alert('Text-to-speech is not supported in this browser.');
+      return;
+    }
+    synth.cancel();
+    if (currentCard) currentCard.classList.remove('speaking');
+
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'zh-CN';
+    if (zhVoice) utter.voice = zhVoice;
+    utter.rate = 0.85;
+    utter.pitch = 1;
+
+    utter.onstart = () => {
+      card.classList.add('speaking');
+      currentCard = card;
+    };
+    utter.onend = utter.onerror = () => {
+      card.classList.remove('speaking');
+      if (currentCard === card) currentCard = null;
+    };
+
+    synth.speak(utter);
+  }
+
+  document.querySelectorAll('.card, .phrase-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const hanziEl = card.querySelector('.hanzi') || card.querySelector('.phrase-hanzi');
+      const hanzi = hanziEl.textContent.trim();
+      speak(hanzi, card);
+    });
+  });
+</script>
+
+</body>
+</html>
