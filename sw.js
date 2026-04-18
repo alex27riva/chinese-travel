@@ -1,4 +1,4 @@
-const CACHE = 'chinese-travel-v3';
+const CACHE = 'chinese-travel-v4';
 const ASSETS = ['./', './index.html', './content.json'];
 
 self.addEventListener('install', event => {
