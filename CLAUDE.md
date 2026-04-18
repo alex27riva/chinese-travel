@@ -29,11 +29,13 @@ On load, `index.html` fetches `content.json` and renders the entire tabbed card 
 
 ### Content shape (`content.json`)
 ```
-{ "tabs": [ { "id", "label", "hanziLabel", "cardClass", "sections": [ { "title", "entries": [ {"hanzi","pinyin","meaning"}, … ] } ] } ] }
+{ "tabs": [ { "id", "label", "hanziLabel", "cardClass",
+              "sections" OR "subsections": [...] } ] }
 ```
+A tab has **either** `sections` (flat: section → entries) **or** `subsections` (nested: subsection → sections → entries). The renderer dispatches on which key is present. Subsection titles render as large hanzi headers with a red-accent underline; use them to group related sections under a shared theme (e.g. vocab is grouped into `Apps` and `Food`).
 - `cardClass` is either `"card"` (vocabulary style — compact, no accent) or `"phrase-card"` (phrase style — wider, gold left border). The renderer derives everything else from this: field classnames get a `phrase-` prefix for phrase cards, and the grid container becomes `.phrase-grid` vs `.grid`.
 - Tone marks in `pinyin` must be real diacritics (`nǐ hǎo`), not numbered (`ni3 hao3`).
-- To add a tab, section, or entry: edit `content.json`. No code change needed.
+- To add a tab, subsection, section, or entry: edit `content.json` and bump `CACHE` in `sw.js` so installed users pick it up.
 
 ### TTS
 One generic click handler on `.card, .phrase-card` reads `.hanzi` or `.phrase-hanzi` and speaks it via `window.speechSynthesis`. Voice selection prefers `zh-CN`, falls back to any `zh-*`. `synth.cancel()` runs on tab switch and before each utterance to prevent overlap. The `.speaking` class is the visual-feedback hook.

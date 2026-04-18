@@ -84,6 +84,32 @@
     margin: 0 auto 2.8rem;
   }
 
+  .subsection-title {
+    max-width: 860px;
+    margin: 0 auto 1.5rem;
+    font-family: var(--font-hanzi);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    padding: 0 0 0.6rem;
+    border-bottom: 1px solid var(--ink);
+    position: relative;
+  }
+  .subsection-title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--red);
+  }
+  .subsection-title + .section { margin-top: 0; }
+  .subsection:not(:first-child) .subsection-title {
+    margin-top: 1rem;
+  }
+
   .section-title {
     font-family: var(--font-hanzi);
     font-size: 0.7rem;
@@ -424,23 +450,42 @@
     });
   }
 
+  function renderSection(sec, cardClass) {
+    const section = document.createElement('div');
+    section.className = 'section';
+    const title = document.createElement('div');
+    title.className = 'section-title';
+    title.textContent = sec.title;
+    const grid = document.createElement('div');
+    grid.className = gridClass(cardClass);
+    sec.entries.forEach(entry => grid.appendChild(renderCard(entry, cardClass)));
+    section.append(title, grid);
+    return section;
+  }
+
+  function renderSubsection(sub, cardClass) {
+    const wrap = document.createElement('div');
+    wrap.className = 'subsection';
+    if (sub.title) {
+      const title = document.createElement('div');
+      title.className = 'subsection-title';
+      title.textContent = sub.title;
+      wrap.appendChild(title);
+    }
+    sub.sections.forEach(sec => wrap.appendChild(renderSection(sec, cardClass)));
+    return wrap;
+  }
+
   function renderPanels(tabs, container) {
     tabs.forEach((tab, i) => {
       const panel = document.createElement('div');
       panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
       panel.id = 'tab-' + tab.id;
-      tab.sections.forEach(sec => {
-        const section = document.createElement('div');
-        section.className = 'section';
-        const title = document.createElement('div');
-        title.className = 'section-title';
-        title.textContent = sec.title;
-        const grid = document.createElement('div');
-        grid.className = gridClass(tab.cardClass);
-        sec.entries.forEach(entry => grid.appendChild(renderCard(entry, tab.cardClass)));
-        section.append(title, grid);
-        panel.appendChild(section);
-      });
+      if (tab.subsections) {
+        tab.subsections.forEach(sub => panel.appendChild(renderSubsection(sub, tab.cardClass)));
+      } else {
+        tab.sections.forEach(sec => panel.appendChild(renderSection(sec, tab.cardClass)));
+      }
       container.appendChild(panel);
     });
   }
