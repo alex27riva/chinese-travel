@@ -29,13 +29,17 @@ On load, `index.html` fetches `content.json` and renders the entire tabbed card 
 
 ### Content shape (`content.json`)
 ```
-{ "tabs": [ { "id", "label", "hanziLabel", "cardClass",
+{ "tabs": [ { "id", "label": {en,it}, "hanziLabel", "cardClass",
               "sections" OR "subsections": [...] } ] }
 ```
 A tab has **either** `sections` (flat: section → entries) **or** `subsections` (nested: subsection → sections → entries). The renderer dispatches on which key is present. Subsection titles render as large hanzi headers with a red-accent underline; use them to group related sections under a shared theme (e.g. vocab is grouped into `Apps` and `Food`).
 - `cardClass` is either `"card"` (vocabulary style — compact, no accent) or `"phrase-card"` (phrase style — wider, gold left border). The renderer derives everything else from this: field classnames get a `phrase-` prefix for phrase cards, and the grid container becomes `.phrase-grid` vs `.grid`.
 - Tone marks in `pinyin` must be real diacritics (`nǐ hǎo`), not numbered (`ni3 hao3`).
-- To add a tab, subsection, section, or entry: edit `content.json` and bump `CACHE` in `sw.js` so installed users pick it up.
+- `hanzi` and `pinyin` are language-neutral (plain strings). **Every other translatable field** — `tab.label`, `subsection.title`, `section.title`, `entry.meaning` — is a `{en, it}` object. The `t()` helper in `index.html` resolves the active language; plain strings are accepted as a legacy fallback.
+- To add a tab, subsection, section, or entry: edit `content.json` with both `en` and `it` translations, and bump `CACHE` in `sw.js` so installed users pick it up.
+
+### Language switch
+Top-right fixed toggle (EN / IT). State is module-level (`currentLang` in the script block), persisted to `localStorage.lang`, and initialized from `navigator.language` on first visit (Italian browsers default to IT). Flipping the switch calls `rerenderContent()` (wipes and rebuilds tabs + panels using the new language) and `applyChrome()` (updates static UI strings via `data-i18n` / `data-i18n-html` attributes against the `CHROME` map in the script). To add UI chrome text, add a key to `CHROME` and tag the element with `data-i18n="key"` (textContent) or `data-i18n-html="key"` (innerHTML — use for strings containing inline `<strong>` etc).
 
 ### TTS
 One generic click handler on `.card, .phrase-card` reads `.hanzi` or `.phrase-hanzi` and speaks it via `window.speechSynthesis`. Voice selection prefers `zh-CN`, falls back to any `zh-*`. `synth.cancel()` runs on tab switch and before each utterance to prevent overlap. The `.speaking` class is the visual-feedback hook.

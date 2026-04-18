@@ -2,144 +2,144 @@
   "tabs": [
     {
       "id": "vocab",
-      "label": "Vocabulary",
+      "label": {"en": "Vocabulary", "it": "Vocabolario"},
       "hanziLabel": "词汇",
       "cardClass": "card",
       "subsections": [
         {
-          "title": "Apps",
+          "title": {"en": "Apps", "it": "App"},
           "sections": [
             {
-              "title": "Navigation & Structure",
+              "title": {"en": "Navigation & Structure", "it": "Navigazione e struttura"},
               "entries": [
-                {"hanzi": "主页", "pinyin": "zhǔ yè", "meaning": "Home / Homepage"},
-                {"hanzi": "首页", "pinyin": "shǒu yè", "meaning": "Home (main page)"},
-                {"hanzi": "返回", "pinyin": "fǎn huí", "meaning": "Back / Return"},
-                {"hanzi": "菜单", "pinyin": "cài dān", "meaning": "Menu"},
-                {"hanzi": "设置", "pinyin": "shè zhì", "meaning": "Settings"},
-                {"hanzi": "搜索", "pinyin": "sōu suǒ", "meaning": "Search"},
-                {"hanzi": "更多", "pinyin": "gèng duō", "meaning": "More"},
-                {"hanzi": "关闭", "pinyin": "guān bì", "meaning": "Close"}
+                {"hanzi": "主页", "pinyin": "zhǔ yè", "meaning": {"en": "Home / Homepage", "it": "Home / Pagina iniziale"}},
+                {"hanzi": "首页", "pinyin": "shǒu yè", "meaning": {"en": "Home (main page)", "it": "Home (pagina principale)"}},
+                {"hanzi": "返回", "pinyin": "fǎn huí", "meaning": {"en": "Back / Return", "it": "Indietro / Torna"}},
+                {"hanzi": "菜单", "pinyin": "cài dān", "meaning": {"en": "Menu", "it": "Menu"}},
+                {"hanzi": "设置", "pinyin": "shè zhì", "meaning": {"en": "Settings", "it": "Impostazioni"}},
+                {"hanzi": "搜索", "pinyin": "sōu suǒ", "meaning": {"en": "Search", "it": "Cerca"}},
+                {"hanzi": "更多", "pinyin": "gèng duō", "meaning": {"en": "More", "it": "Altro"}},
+                {"hanzi": "关闭", "pinyin": "guān bì", "meaning": {"en": "Close", "it": "Chiudi"}}
               ]
             },
             {
-              "title": "Actions & Buttons",
+              "title": {"en": "Actions & Buttons", "it": "Azioni e pulsanti"},
               "entries": [
-                {"hanzi": "确认", "pinyin": "què rèn", "meaning": "Confirm / OK"},
-                {"hanzi": "取消", "pinyin": "qǔ xiāo", "meaning": "Cancel"},
-                {"hanzi": "提交", "pinyin": "tí jiāo", "meaning": "Submit"},
-                {"hanzi": "下载", "pinyin": "xià zài", "meaning": "Download"},
-                {"hanzi": "上传", "pinyin": "shàng chuán", "meaning": "Upload"},
-                {"hanzi": "分享", "pinyin": "fēn xiǎng", "meaning": "Share"},
-                {"hanzi": "删除", "pinyin": "shān chú", "meaning": "Delete"},
-                {"hanzi": "编辑", "pinyin": "biān jí", "meaning": "Edit"},
-                {"hanzi": "保存", "pinyin": "bǎo cún", "meaning": "Save"},
-                {"hanzi": "刷新", "pinyin": "shuā xīn", "meaning": "Refresh / Reload"},
-                {"hanzi": "复制", "pinyin": "fù zhì", "meaning": "Copy"},
-                {"hanzi": "粘贴", "pinyin": "zhān tiē", "meaning": "Paste"}
+                {"hanzi": "确认", "pinyin": "què rèn", "meaning": {"en": "Confirm / OK", "it": "Conferma / OK"}},
+                {"hanzi": "取消", "pinyin": "qǔ xiāo", "meaning": {"en": "Cancel", "it": "Annulla"}},
+                {"hanzi": "提交", "pinyin": "tí jiāo", "meaning": {"en": "Submit", "it": "Invia"}},
+                {"hanzi": "下载", "pinyin": "xià zài", "meaning": {"en": "Download", "it": "Scarica"}},
+                {"hanzi": "上传", "pinyin": "shàng chuán", "meaning": {"en": "Upload", "it": "Carica"}},
+                {"hanzi": "分享", "pinyin": "fēn xiǎng", "meaning": {"en": "Share", "it": "Condividi"}},
+                {"hanzi": "删除", "pinyin": "shān chú", "meaning": {"en": "Delete", "it": "Elimina"}},
+                {"hanzi": "编辑", "pinyin": "biān jí", "meaning": {"en": "Edit", "it": "Modifica"}},
+                {"hanzi": "保存", "pinyin": "bǎo cún", "meaning": {"en": "Save", "it": "Salva"}},
+                {"hanzi": "刷新", "pinyin": "shuā xīn", "meaning": {"en": "Refresh / Reload", "it": "Aggiorna / Ricarica"}},
+                {"hanzi": "复制", "pinyin": "fù zhì", "meaning": {"en": "Copy", "it": "Copia"}},
+                {"hanzi": "粘贴", "pinyin": "zhān tiē", "meaning": {"en": "Paste", "it": "Incolla"}}
               ]
             },
             {
-              "title": "Account & Payments",
+              "title": {"en": "Account & Payments", "it": "Account e pagamenti"},
               "entries": [
-                {"hanzi": "登录", "pinyin": "dēng lù", "meaning": "Log in"},
-                {"hanzi": "注册", "pinyin": "zhù cè", "meaning": "Register / Sign up"},
-                {"hanzi": "退出", "pinyin": "tuì chū", "meaning": "Log out / Exit"},
-                {"hanzi": "密码", "pinyin": "mì mǎ", "meaning": "Password"},
-                {"hanzi": "账号", "pinyin": "zhàng hào", "meaning": "Account"},
-                {"hanzi": "支付", "pinyin": "zhī fù", "meaning": "Pay / Payment"},
-                {"hanzi": "付款", "pinyin": "fù kuǎn", "meaning": "Make a payment"},
-                {"hanzi": "余额", "pinyin": "yú é", "meaning": "Balance"},
-                {"hanzi": "订单", "pinyin": "dìng dān", "meaning": "Order"},
-                {"hanzi": "优惠券", "pinyin": "yōu huì quàn", "meaning": "Coupon / Voucher"}
+                {"hanzi": "登录", "pinyin": "dēng lù", "meaning": {"en": "Log in", "it": "Accedi"}},
+                {"hanzi": "注册", "pinyin": "zhù cè", "meaning": {"en": "Register / Sign up", "it": "Registrati / Iscriviti"}},
+                {"hanzi": "退出", "pinyin": "tuì chū", "meaning": {"en": "Log out / Exit", "it": "Esci"}},
+                {"hanzi": "密码", "pinyin": "mì mǎ", "meaning": {"en": "Password", "it": "Password"}},
+                {"hanzi": "账号", "pinyin": "zhàng hào", "meaning": {"en": "Account", "it": "Account"}},
+                {"hanzi": "支付", "pinyin": "zhī fù", "meaning": {"en": "Pay / Payment", "it": "Paga / Pagamento"}},
+                {"hanzi": "付款", "pinyin": "fù kuǎn", "meaning": {"en": "Make a payment", "it": "Effettua un pagamento"}},
+                {"hanzi": "余额", "pinyin": "yú é", "meaning": {"en": "Balance", "it": "Saldo"}},
+                {"hanzi": "订单", "pinyin": "dìng dān", "meaning": {"en": "Order", "it": "Ordine"}},
+                {"hanzi": "优惠券", "pinyin": "yōu huì quàn", "meaning": {"en": "Coupon / Voucher", "it": "Coupon / Buono sconto"}}
               ]
             },
             {
-              "title": "Notifications & Status",
+              "title": {"en": "Notifications & Status", "it": "Notifiche e stato"},
               "entries": [
-                {"hanzi": "通知", "pinyin": "tōng zhī", "meaning": "Notification"},
-                {"hanzi": "消息", "pinyin": "xiāo xi", "meaning": "Message"},
-                {"hanzi": "成功", "pinyin": "chéng gōng", "meaning": "Success"},
-                {"hanzi": "失败", "pinyin": "shī bài", "meaning": "Failed / Error"},
-                {"hanzi": "加载中", "pinyin": "jiā zài zhōng", "meaning": "Loading…"},
-                {"hanzi": "错误", "pinyin": "cuò wù", "meaning": "Error"},
-                {"hanzi": "已完成", "pinyin": "yǐ wán chéng", "meaning": "Completed"},
-                {"hanzi": "待处理", "pinyin": "dài chǔ lǐ", "meaning": "Pending"}
+                {"hanzi": "通知", "pinyin": "tōng zhī", "meaning": {"en": "Notification", "it": "Notifica"}},
+                {"hanzi": "消息", "pinyin": "xiāo xi", "meaning": {"en": "Message", "it": "Messaggio"}},
+                {"hanzi": "成功", "pinyin": "chéng gōng", "meaning": {"en": "Success", "it": "Successo"}},
+                {"hanzi": "失败", "pinyin": "shī bài", "meaning": {"en": "Failed / Error", "it": "Fallito / Errore"}},
+                {"hanzi": "加载中", "pinyin": "jiā zài zhōng", "meaning": {"en": "Loading…", "it": "Caricamento…"}},
+                {"hanzi": "错误", "pinyin": "cuò wù", "meaning": {"en": "Error", "it": "Errore"}},
+                {"hanzi": "已完成", "pinyin": "yǐ wán chéng", "meaning": {"en": "Completed", "it": "Completato"}},
+                {"hanzi": "待处理", "pinyin": "dài chǔ lǐ", "meaning": {"en": "Pending", "it": "In attesa"}}
               ]
             },
             {
-              "title": "Maps, Transport & Daily Life",
+              "title": {"en": "Maps, Transport & Daily Life", "it": "Mappe, trasporti e vita quotidiana"},
               "entries": [
-                {"hanzi": "地图", "pinyin": "dì tú", "meaning": "Map"},
-                {"hanzi": "导航", "pinyin": "dǎo háng", "meaning": "Navigation / GPS"},
-                {"hanzi": "出发", "pinyin": "chū fā", "meaning": "Depart / Start"},
-                {"hanzi": "到达", "pinyin": "dào dá", "meaning": "Arrive / Destination"},
-                {"hanzi": "附近", "pinyin": "fù jìn", "meaning": "Nearby"},
-                {"hanzi": "扫码", "pinyin": "sǎo mǎ", "meaning": "Scan QR code"},
-                {"hanzi": "外卖", "pinyin": "wài mài", "meaning": "Food delivery"},
-                {"hanzi": "评价", "pinyin": "píng jià", "meaning": "Review / Rating"}
+                {"hanzi": "地图", "pinyin": "dì tú", "meaning": {"en": "Map", "it": "Mappa"}},
+                {"hanzi": "导航", "pinyin": "dǎo háng", "meaning": {"en": "Navigation / GPS", "it": "Navigazione / GPS"}},
+                {"hanzi": "出发", "pinyin": "chū fā", "meaning": {"en": "Depart / Start", "it": "Parti / Inizia"}},
+                {"hanzi": "到达", "pinyin": "dào dá", "meaning": {"en": "Arrive / Destination", "it": "Arrivo / Destinazione"}},
+                {"hanzi": "附近", "pinyin": "fù jìn", "meaning": {"en": "Nearby", "it": "Nelle vicinanze"}},
+                {"hanzi": "扫码", "pinyin": "sǎo mǎ", "meaning": {"en": "Scan QR code", "it": "Scansiona QR code"}},
+                {"hanzi": "外卖", "pinyin": "wài mài", "meaning": {"en": "Food delivery", "it": "Consegna a domicilio"}},
+                {"hanzi": "评价", "pinyin": "píng jià", "meaning": {"en": "Review / Rating", "it": "Recensione / Valutazione"}}
               ]
             }
           ]
         },
         {
-          "title": "Food",
+          "title": {"en": "Food", "it": "Cibo"},
           "sections": [
             {
-              "title": "Dishes & Staples",
+              "title": {"en": "Dishes & Staples", "it": "Piatti e alimenti base"},
               "entries": [
-                {"hanzi": "米饭", "pinyin": "mǐ fàn", "meaning": "Rice (cooked)"},
-                {"hanzi": "面条", "pinyin": "miàn tiáo", "meaning": "Noodles"},
-                {"hanzi": "饺子", "pinyin": "jiǎo zi", "meaning": "Dumplings"},
-                {"hanzi": "包子", "pinyin": "bāo zi", "meaning": "Steamed bun (filled)"},
-                {"hanzi": "馒头", "pinyin": "mán tou", "meaning": "Steamed bun (plain)"},
-                {"hanzi": "炒饭", "pinyin": "chǎo fàn", "meaning": "Fried rice"},
-                {"hanzi": "粥", "pinyin": "zhōu", "meaning": "Rice porridge / Congee"},
-                {"hanzi": "汤", "pinyin": "tāng", "meaning": "Soup"},
-                {"hanzi": "火锅", "pinyin": "huǒ guō", "meaning": "Hot pot"},
-                {"hanzi": "烧烤", "pinyin": "shāo kǎo", "meaning": "BBQ / Grilled skewers"}
+                {"hanzi": "米饭", "pinyin": "mǐ fàn", "meaning": {"en": "Rice (cooked)", "it": "Riso (cotto)"}},
+                {"hanzi": "面条", "pinyin": "miàn tiáo", "meaning": {"en": "Noodles", "it": "Noodle / Spaghetti cinesi"}},
+                {"hanzi": "饺子", "pinyin": "jiǎo zi", "meaning": {"en": "Dumplings", "it": "Ravioli cinesi (jiaozi)"}},
+                {"hanzi": "包子", "pinyin": "bāo zi", "meaning": {"en": "Steamed bun (filled)", "it": "Panino al vapore (ripieno)"}},
+                {"hanzi": "馒头", "pinyin": "mán tou", "meaning": {"en": "Steamed bun (plain)", "it": "Panino al vapore (semplice)"}},
+                {"hanzi": "炒饭", "pinyin": "chǎo fàn", "meaning": {"en": "Fried rice", "it": "Riso saltato"}},
+                {"hanzi": "粥", "pinyin": "zhōu", "meaning": {"en": "Rice porridge / Congee", "it": "Porridge di riso / Congee"}},
+                {"hanzi": "汤", "pinyin": "tāng", "meaning": {"en": "Soup", "it": "Zuppa"}},
+                {"hanzi": "火锅", "pinyin": "huǒ guō", "meaning": {"en": "Hot pot", "it": "Hot pot (pentola bollente)"}},
+                {"hanzi": "烧烤", "pinyin": "shāo kǎo", "meaning": {"en": "BBQ / Grilled skewers", "it": "Grigliata / Spiedini"}}
               ]
             },
             {
-              "title": "Ingredients & Proteins",
+              "title": {"en": "Ingredients & Proteins", "it": "Ingredienti e proteine"},
               "entries": [
-                {"hanzi": "鸡肉", "pinyin": "jī ròu", "meaning": "Chicken"},
-                {"hanzi": "牛肉", "pinyin": "niú ròu", "meaning": "Beef"},
-                {"hanzi": "猪肉", "pinyin": "zhū ròu", "meaning": "Pork"},
-                {"hanzi": "鱼", "pinyin": "yú", "meaning": "Fish"},
-                {"hanzi": "虾", "pinyin": "xiā", "meaning": "Shrimp"},
-                {"hanzi": "鸡蛋", "pinyin": "jī dàn", "meaning": "Egg"},
-                {"hanzi": "豆腐", "pinyin": "dòu fu", "meaning": "Tofu"},
-                {"hanzi": "蔬菜", "pinyin": "shū cài", "meaning": "Vegetables"},
-                {"hanzi": "水果", "pinyin": "shuǐ guǒ", "meaning": "Fruit"}
+                {"hanzi": "鸡肉", "pinyin": "jī ròu", "meaning": {"en": "Chicken", "it": "Pollo"}},
+                {"hanzi": "牛肉", "pinyin": "niú ròu", "meaning": {"en": "Beef", "it": "Manzo"}},
+                {"hanzi": "猪肉", "pinyin": "zhū ròu", "meaning": {"en": "Pork", "it": "Maiale"}},
+                {"hanzi": "鱼", "pinyin": "yú", "meaning": {"en": "Fish", "it": "Pesce"}},
+                {"hanzi": "虾", "pinyin": "xiā", "meaning": {"en": "Shrimp", "it": "Gamberi"}},
+                {"hanzi": "鸡蛋", "pinyin": "jī dàn", "meaning": {"en": "Egg", "it": "Uovo"}},
+                {"hanzi": "豆腐", "pinyin": "dòu fu", "meaning": {"en": "Tofu", "it": "Tofu"}},
+                {"hanzi": "蔬菜", "pinyin": "shū cài", "meaning": {"en": "Vegetables", "it": "Verdure"}},
+                {"hanzi": "水果", "pinyin": "shuǐ guǒ", "meaning": {"en": "Fruit", "it": "Frutta"}}
               ]
             },
             {
-              "title": "Drinks",
+              "title": {"en": "Drinks", "it": "Bevande"},
               "entries": [
-                {"hanzi": "水", "pinyin": "shuǐ", "meaning": "Water"},
-                {"hanzi": "茶", "pinyin": "chá", "meaning": "Tea"},
-                {"hanzi": "咖啡", "pinyin": "kā fēi", "meaning": "Coffee"},
-                {"hanzi": "啤酒", "pinyin": "pí jiǔ", "meaning": "Beer"},
-                {"hanzi": "白酒", "pinyin": "bái jiǔ", "meaning": "Chinese liquor (baijiu)"},
-                {"hanzi": "牛奶", "pinyin": "niú nǎi", "meaning": "Milk"},
-                {"hanzi": "果汁", "pinyin": "guǒ zhī", "meaning": "Juice"},
-                {"hanzi": "可乐", "pinyin": "kě lè", "meaning": "Cola"}
+                {"hanzi": "水", "pinyin": "shuǐ", "meaning": {"en": "Water", "it": "Acqua"}},
+                {"hanzi": "茶", "pinyin": "chá", "meaning": {"en": "Tea", "it": "Tè"}},
+                {"hanzi": "咖啡", "pinyin": "kā fēi", "meaning": {"en": "Coffee", "it": "Caffè"}},
+                {"hanzi": "啤酒", "pinyin": "pí jiǔ", "meaning": {"en": "Beer", "it": "Birra"}},
+                {"hanzi": "白酒", "pinyin": "bái jiǔ", "meaning": {"en": "Chinese liquor (baijiu)", "it": "Liquore cinese (baijiu)"}},
+                {"hanzi": "牛奶", "pinyin": "niú nǎi", "meaning": {"en": "Milk", "it": "Latte"}},
+                {"hanzi": "果汁", "pinyin": "guǒ zhī", "meaning": {"en": "Juice", "it": "Succo"}},
+                {"hanzi": "可乐", "pinyin": "kě lè", "meaning": {"en": "Cola", "it": "Cola"}}
               ]
             },
             {
-              "title": "Flavors & Cooking",
+              "title": {"en": "Flavors & Cooking", "it": "Sapori e cottura"},
               "entries": [
-                {"hanzi": "辣", "pinyin": "là", "meaning": "Spicy"},
-                {"hanzi": "甜", "pinyin": "tián", "meaning": "Sweet"},
-                {"hanzi": "咸", "pinyin": "xián", "meaning": "Salty"},
-                {"hanzi": "酸", "pinyin": "suān", "meaning": "Sour"},
-                {"hanzi": "苦", "pinyin": "kǔ", "meaning": "Bitter"},
-                {"hanzi": "炒", "pinyin": "chǎo", "meaning": "Stir-fried"},
-                {"hanzi": "蒸", "pinyin": "zhēng", "meaning": "Steamed"},
-                {"hanzi": "烤", "pinyin": "kǎo", "meaning": "Roasted / Grilled"},
-                {"hanzi": "煮", "pinyin": "zhǔ", "meaning": "Boiled"},
-                {"hanzi": "凉", "pinyin": "liáng", "meaning": "Cold (served chilled)"}
+                {"hanzi": "辣", "pinyin": "là", "meaning": {"en": "Spicy", "it": "Piccante"}},
+                {"hanzi": "甜", "pinyin": "tián", "meaning": {"en": "Sweet", "it": "Dolce"}},
+                {"hanzi": "咸", "pinyin": "xián", "meaning": {"en": "Salty", "it": "Salato"}},
+                {"hanzi": "酸", "pinyin": "suān", "meaning": {"en": "Sour", "it": "Aspro"}},
+                {"hanzi": "苦", "pinyin": "kǔ", "meaning": {"en": "Bitter", "it": "Amaro"}},
+                {"hanzi": "炒", "pinyin": "chǎo", "meaning": {"en": "Stir-fried", "it": "Saltato in padella"}},
+                {"hanzi": "蒸", "pinyin": "zhēng", "meaning": {"en": "Steamed", "it": "Al vapore"}},
+                {"hanzi": "烤", "pinyin": "kǎo", "meaning": {"en": "Roasted / Grilled", "it": "Arrosto / Alla griglia"}},
+                {"hanzi": "煮", "pinyin": "zhǔ", "meaning": {"en": "Boiled", "it": "Bollito"}},
+                {"hanzi": "凉", "pinyin": "liáng", "meaning": {"en": "Cold (served chilled)", "it": "Freddo (servito freddo)"}}
               ]
             }
           ]
@@ -148,81 +148,81 @@
     },
     {
       "id": "phrases",
-      "label": "Travel Phrases",
+      "label": {"en": "Travel Phrases", "it": "Frasi di viaggio"},
       "hanziLabel": "短语",
       "cardClass": "phrase-card",
       "sections": [
         {
-          "title": "Essentials & Greetings",
+          "title": {"en": "Essentials & Greetings", "it": "Essenziali e saluti"},
           "entries": [
-            {"hanzi": "你好", "pinyin": "nǐ hǎo", "meaning": "Hello"},
-            {"hanzi": "谢谢", "pinyin": "xiè xie", "meaning": "Thank you"},
-            {"hanzi": "不客气", "pinyin": "bù kè qi", "meaning": "You're welcome"},
-            {"hanzi": "对不起", "pinyin": "duì bu qǐ", "meaning": "Sorry / Excuse me"},
-            {"hanzi": "没关系", "pinyin": "méi guān xi", "meaning": "It's okay / No problem"},
-            {"hanzi": "再见", "pinyin": "zài jiàn", "meaning": "Goodbye"},
-            {"hanzi": "是", "pinyin": "shì", "meaning": "Yes"},
-            {"hanzi": "不是", "pinyin": "bú shì", "meaning": "No"},
-            {"hanzi": "我不懂", "pinyin": "wǒ bù dǒng", "meaning": "I don't understand"},
-            {"hanzi": "你会说英语吗?", "pinyin": "nǐ huì shuō yīng yǔ ma?", "meaning": "Do you speak English?"},
-            {"hanzi": "请再说一遍", "pinyin": "qǐng zài shuō yí biàn", "meaning": "Please say it again"},
-            {"hanzi": "请等一下", "pinyin": "qǐng děng yí xià", "meaning": "Please wait a moment"}
+            {"hanzi": "你好", "pinyin": "nǐ hǎo", "meaning": {"en": "Hello", "it": "Ciao"}},
+            {"hanzi": "谢谢", "pinyin": "xiè xie", "meaning": {"en": "Thank you", "it": "Grazie"}},
+            {"hanzi": "不客气", "pinyin": "bù kè qi", "meaning": {"en": "You're welcome", "it": "Prego"}},
+            {"hanzi": "对不起", "pinyin": "duì bu qǐ", "meaning": {"en": "Sorry / Excuse me", "it": "Scusa / Mi scusi"}},
+            {"hanzi": "没关系", "pinyin": "méi guān xi", "meaning": {"en": "It's okay / No problem", "it": "Non fa niente / Nessun problema"}},
+            {"hanzi": "再见", "pinyin": "zài jiàn", "meaning": {"en": "Goodbye", "it": "Arrivederci"}},
+            {"hanzi": "是", "pinyin": "shì", "meaning": {"en": "Yes", "it": "Sì"}},
+            {"hanzi": "不是", "pinyin": "bú shì", "meaning": {"en": "No", "it": "No"}},
+            {"hanzi": "我不懂", "pinyin": "wǒ bù dǒng", "meaning": {"en": "I don't understand", "it": "Non capisco"}},
+            {"hanzi": "你会说英语吗?", "pinyin": "nǐ huì shuō yīng yǔ ma?", "meaning": {"en": "Do you speak English?", "it": "Parli inglese?"}},
+            {"hanzi": "请再说一遍", "pinyin": "qǐng zài shuō yí biàn", "meaning": {"en": "Please say it again", "it": "Puoi ripetere, per favore?"}},
+            {"hanzi": "请等一下", "pinyin": "qǐng děng yí xià", "meaning": {"en": "Please wait a moment", "it": "Un momento, per favore"}}
           ]
         },
         {
-          "title": "Directions & Transport",
+          "title": {"en": "Directions & Transport", "it": "Direzioni e trasporti"},
           "entries": [
-            {"hanzi": "厕所在哪里?", "pinyin": "cè suǒ zài nǎ lǐ?", "meaning": "Where is the toilet?"},
-            {"hanzi": "地铁站在哪里?", "pinyin": "dì tiě zhàn zài nǎ lǐ?", "meaning": "Where is the subway station?"},
-            {"hanzi": "我想去这里", "pinyin": "wǒ xiǎng qù zhè lǐ", "meaning": "I want to go here (show on map)"},
-            {"hanzi": "多远?", "pinyin": "duō yuǎn?", "meaning": "How far?"},
-            {"hanzi": "请带我去这个地址", "pinyin": "qǐng dài wǒ qù zhè ge dì zhǐ", "meaning": "Please take me to this address"},
-            {"hanzi": "停在这里", "pinyin": "tíng zài zhè lǐ", "meaning": "Stop here"},
-            {"hanzi": "火车站", "pinyin": "huǒ chē zhàn", "meaning": "Train station"},
-            {"hanzi": "机场", "pinyin": "jī chǎng", "meaning": "Airport"},
-            {"hanzi": "出租车", "pinyin": "chū zū chē", "meaning": "Taxi"},
-            {"hanzi": "高铁", "pinyin": "gāo tiě", "meaning": "High-speed rail"}
+            {"hanzi": "厕所在哪里?", "pinyin": "cè suǒ zài nǎ lǐ?", "meaning": {"en": "Where is the toilet?", "it": "Dov'è il bagno?"}},
+            {"hanzi": "地铁站在哪里?", "pinyin": "dì tiě zhàn zài nǎ lǐ?", "meaning": {"en": "Where is the subway station?", "it": "Dov'è la stazione della metro?"}},
+            {"hanzi": "我想去这里", "pinyin": "wǒ xiǎng qù zhè lǐ", "meaning": {"en": "I want to go here (show on map)", "it": "Voglio andare qui (mostra sulla mappa)"}},
+            {"hanzi": "多远?", "pinyin": "duō yuǎn?", "meaning": {"en": "How far?", "it": "Quanto è lontano?"}},
+            {"hanzi": "请带我去这个地址", "pinyin": "qǐng dài wǒ qù zhè ge dì zhǐ", "meaning": {"en": "Please take me to this address", "it": "Portami a questo indirizzo, per favore"}},
+            {"hanzi": "停在这里", "pinyin": "tíng zài zhè lǐ", "meaning": {"en": "Stop here", "it": "Fermati qui"}},
+            {"hanzi": "火车站", "pinyin": "huǒ chē zhàn", "meaning": {"en": "Train station", "it": "Stazione ferroviaria"}},
+            {"hanzi": "机场", "pinyin": "jī chǎng", "meaning": {"en": "Airport", "it": "Aeroporto"}},
+            {"hanzi": "出租车", "pinyin": "chū zū chē", "meaning": {"en": "Taxi", "it": "Taxi"}},
+            {"hanzi": "高铁", "pinyin": "gāo tiě", "meaning": {"en": "High-speed rail", "it": "Treno ad alta velocità"}}
           ]
         },
         {
-          "title": "Food & Restaurants",
+          "title": {"en": "Food & Restaurants", "it": "Cibo e ristoranti"},
           "entries": [
-            {"hanzi": "菜单", "pinyin": "cài dān", "meaning": "Menu"},
-            {"hanzi": "我要这个", "pinyin": "wǒ yào zhè ge", "meaning": "I want this (point at menu)"},
-            {"hanzi": "不要辣", "pinyin": "bú yào là", "meaning": "Not spicy"},
-            {"hanzi": "微辣", "pinyin": "wēi là", "meaning": "Mildly spicy"},
-            {"hanzi": "我吃素", "pinyin": "wǒ chī sù", "meaning": "I'm vegetarian"},
-            {"hanzi": "我对...过敏", "pinyin": "wǒ duì... guò mǐn", "meaning": "I'm allergic to…"},
-            {"hanzi": "一瓶水", "pinyin": "yì píng shuǐ", "meaning": "A bottle of water"},
-            {"hanzi": "买单", "pinyin": "mǎi dān", "meaning": "The bill, please"},
-            {"hanzi": "很好吃", "pinyin": "hěn hǎo chī", "meaning": "Very delicious"},
-            {"hanzi": "打包", "pinyin": "dǎ bāo", "meaning": "To take away / To go"}
+            {"hanzi": "菜单", "pinyin": "cài dān", "meaning": {"en": "Menu", "it": "Menu"}},
+            {"hanzi": "我要这个", "pinyin": "wǒ yào zhè ge", "meaning": {"en": "I want this (point at menu)", "it": "Voglio questo (indica sul menu)"}},
+            {"hanzi": "不要辣", "pinyin": "bú yào là", "meaning": {"en": "Not spicy", "it": "Non piccante"}},
+            {"hanzi": "微辣", "pinyin": "wēi là", "meaning": {"en": "Mildly spicy", "it": "Poco piccante"}},
+            {"hanzi": "我吃素", "pinyin": "wǒ chī sù", "meaning": {"en": "I'm vegetarian", "it": "Sono vegetariano/a"}},
+            {"hanzi": "我对...过敏", "pinyin": "wǒ duì... guò mǐn", "meaning": {"en": "I'm allergic to…", "it": "Sono allergico/a a…"}},
+            {"hanzi": "一瓶水", "pinyin": "yì píng shuǐ", "meaning": {"en": "A bottle of water", "it": "Una bottiglia d'acqua"}},
+            {"hanzi": "买单", "pinyin": "mǎi dān", "meaning": {"en": "The bill, please", "it": "Il conto, per favore"}},
+            {"hanzi": "很好吃", "pinyin": "hěn hǎo chī", "meaning": {"en": "Very delicious", "it": "Molto buono"}},
+            {"hanzi": "打包", "pinyin": "dǎ bāo", "meaning": {"en": "To take away / To go", "it": "Da asporto"}}
           ]
         },
         {
-          "title": "Shopping & Money",
+          "title": {"en": "Shopping & Money", "it": "Shopping e denaro"},
           "entries": [
-            {"hanzi": "多少钱?", "pinyin": "duō shǎo qián?", "meaning": "How much does it cost?"},
-            {"hanzi": "太贵了", "pinyin": "tài guì le", "meaning": "Too expensive"},
-            {"hanzi": "便宜一点", "pinyin": "pián yi yì diǎn", "meaning": "A bit cheaper, please"},
-            {"hanzi": "可以刷卡吗?", "pinyin": "kě yǐ shuā kǎ ma?", "meaning": "Can I pay by card?"},
-            {"hanzi": "支付宝可以吗?", "pinyin": "zhī fù bǎo kě yǐ ma?", "meaning": "Can I pay with Alipay?"},
-            {"hanzi": "微信支付", "pinyin": "wēi xìn zhī fù", "meaning": "WeChat Pay"},
-            {"hanzi": "现金", "pinyin": "xiàn jīn", "meaning": "Cash"},
-            {"hanzi": "发票", "pinyin": "fā piào", "meaning": "Receipt / Invoice"}
+            {"hanzi": "多少钱?", "pinyin": "duō shǎo qián?", "meaning": {"en": "How much does it cost?", "it": "Quanto costa?"}},
+            {"hanzi": "太贵了", "pinyin": "tài guì le", "meaning": {"en": "Too expensive", "it": "Troppo caro"}},
+            {"hanzi": "便宜一点", "pinyin": "pián yi yì diǎn", "meaning": {"en": "A bit cheaper, please", "it": "Un po' meno, per favore"}},
+            {"hanzi": "可以刷卡吗?", "pinyin": "kě yǐ shuā kǎ ma?", "meaning": {"en": "Can I pay by card?", "it": "Posso pagare con la carta?"}},
+            {"hanzi": "支付宝可以吗?", "pinyin": "zhī fù bǎo kě yǐ ma?", "meaning": {"en": "Can I pay with Alipay?", "it": "Posso pagare con Alipay?"}},
+            {"hanzi": "微信支付", "pinyin": "wēi xìn zhī fù", "meaning": {"en": "WeChat Pay", "it": "WeChat Pay"}},
+            {"hanzi": "现金", "pinyin": "xiàn jīn", "meaning": {"en": "Cash", "it": "Contanti"}},
+            {"hanzi": "发票", "pinyin": "fā piào", "meaning": {"en": "Receipt / Invoice", "it": "Ricevuta / Fattura"}}
           ]
         },
         {
-          "title": "Emergencies & Help",
+          "title": {"en": "Emergencies & Help", "it": "Emergenze e aiuto"},
           "entries": [
-            {"hanzi": "救命!", "pinyin": "jiù mìng!", "meaning": "Help! (emergency)"},
-            {"hanzi": "请帮我", "pinyin": "qǐng bāng wǒ", "meaning": "Please help me"},
-            {"hanzi": "我生病了", "pinyin": "wǒ shēng bìng le", "meaning": "I'm sick"},
-            {"hanzi": "医院在哪里?", "pinyin": "yī yuàn zài nǎ lǐ?", "meaning": "Where is the hospital?"},
-            {"hanzi": "叫救护车", "pinyin": "jiào jiù hù chē", "meaning": "Call an ambulance"},
-            {"hanzi": "叫警察", "pinyin": "jiào jǐng chá", "meaning": "Call the police"},
-            {"hanzi": "我的护照丢了", "pinyin": "wǒ de hù zhào diū le", "meaning": "I lost my passport"},
-            {"hanzi": "意大利大使馆", "pinyin": "yì dà lì dà shǐ guǎn", "meaning": "Italian embassy"}
+            {"hanzi": "救命!", "pinyin": "jiù mìng!", "meaning": {"en": "Help! (emergency)", "it": "Aiuto! (emergenza)"}},
+            {"hanzi": "请帮我", "pinyin": "qǐng bāng wǒ", "meaning": {"en": "Please help me", "it": "Aiutami, per favore"}},
+            {"hanzi": "我生病了", "pinyin": "wǒ shēng bìng le", "meaning": {"en": "I'm sick", "it": "Sto male"}},
+            {"hanzi": "医院在哪里?", "pinyin": "yī yuàn zài nǎ lǐ?", "meaning": {"en": "Where is the hospital?", "it": "Dov'è l'ospedale?"}},
+            {"hanzi": "叫救护车", "pinyin": "jiào jiù hù chē", "meaning": {"en": "Call an ambulance", "it": "Chiama un'ambulanza"}},
+            {"hanzi": "叫警察", "pinyin": "jiào jǐng chá", "meaning": {"en": "Call the police", "it": "Chiama la polizia"}},
+            {"hanzi": "我的护照丢了", "pinyin": "wǒ de hù zhào diū le", "meaning": {"en": "I lost my passport", "it": "Ho perso il passaporto"}},
+            {"hanzi": "意大利大使馆", "pinyin": "yì dà lì dà shǐ guǎn", "meaning": {"en": "Italian embassy", "it": "Ambasciata italiana"}}
           ]
         }
       ]

@@ -377,20 +377,58 @@
     font-size: 0.85rem;
     text-align: center;
   }
+
+  .lang-switch {
+    position: fixed;
+    top: calc(env(safe-area-inset-top) + 0.75rem);
+    right: calc(env(safe-area-inset-right) + 0.75rem);
+    z-index: 100;
+    display: flex;
+    gap: 0.1rem;
+    padding: 0.2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(26,18,8,0.08);
+  }
+  .lang-switch button {
+    background: transparent;
+    border: none;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .lang-switch button:hover { color: var(--ink); }
+  .lang-switch button.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
 </style>
 </head>
 <body>
 
+<div class="lang-switch" role="group" aria-label="Language">
+  <button data-lang="en" type="button">EN</button>
+  <button data-lang="it" type="button">IT</button>
+</div>
+
 <header>
   <div class="header-rule"></div>
   <h1>中文 App 词汇</h1>
-  <p class="subtitle">Essential Chinese for navigating apps & digital life</p>
-  <p class="subtitle" style="margin-top:0.3rem; font-size:0.8rem;">🔊 Tap any card to hear it spoken</p>
+  <p class="subtitle" data-i18n="subtitle">Essential Chinese for navigating apps & digital life</p>
+  <p class="subtitle" style="margin-top:0.3rem; font-size:0.8rem;" data-i18n="tapHint">🔊 Tap any card to hear it spoken</p>
 </header>
 
 <div class="install-hint" id="installHint">
   <span style="font-size:1.1rem;">📱</span>
-  <span><strong>Works offline!</strong> Tap Safari's Share button → <strong>Add to Home Screen</strong> to install as an app. Perfect for your trip.</span>
+  <span data-i18n-html="installHint"><strong>Works offline!</strong> Tap Safari's Share button → <strong>Add to Home Screen</strong> to install as an app. Perfect for your trip.</span>
   <button class="close-hint" onclick="this.parentElement.style.display='none'; try{localStorage.setItem('hintDismissed','1')}catch(e){}">✕</button>
 </div>
 
@@ -399,7 +437,7 @@
 
 <div class="tip-box">
   <span class="icon">💡</span>
-  <span><strong>Tip:</strong> In Chinese apps, <strong>确认 (quèrèn)</strong> and <strong>取消 (qǔxiāo)</strong> are often swapped compared to Western UI conventions — read carefully before tapping! <strong>扫码 (sǎo mǎ)</strong> is everywhere: metro, restaurants, shops, bikes.</span>
+  <span data-i18n-html="tip"><strong>Tip:</strong> In Chinese apps, <strong>确认 (quèrèn)</strong> and <strong>取消 (qǔxiāo)</strong> are often swapped compared to Western UI conventions — read carefully before tapping! <strong>扫码 (sǎo mǎ)</strong> is everywhere: metro, restaurants, shops, bikes.</span>
 </div>
 
 <script>
@@ -415,6 +453,45 @@
 
   const SPEAKER_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
 
+  const SUPPORTED_LANGS = ['en', 'it'];
+
+  const CHROME = {
+    subtitle: {
+      en: 'Essential Chinese for navigating apps, food & travel',
+      it: 'Cinese essenziale per app, cibo e viaggi'
+    },
+    tapHint: {
+      en: '🔊 Tap any card to hear it spoken',
+      it: '🔊 Tocca una carta per ascoltarla'
+    },
+    installHint: {
+      en: '<strong>Works offline!</strong> Tap Safari\'s Share button → <strong>Add to Home Screen</strong> to install as an app. Perfect for your trip.',
+      it: '<strong>Funziona offline!</strong> Tocca il pulsante Condividi di Safari → <strong>Aggiungi alla schermata Home</strong> per installarla come app. Perfetta per il tuo viaggio.'
+    },
+    tip: {
+      en: '<strong>Tip:</strong> In Chinese apps, <strong>确认 (quèrèn)</strong> and <strong>取消 (qǔxiāo)</strong> are often swapped compared to Western UI conventions — read carefully before tapping! <strong>扫码 (sǎo mǎ)</strong> is everywhere: metro, restaurants, shops, bikes.',
+      it: '<strong>Suggerimento:</strong> Nelle app cinesi, <strong>确认 (quèrèn)</strong> e <strong>取消 (qǔxiāo)</strong> sono spesso invertiti rispetto alle convenzioni occidentali — leggi con attenzione prima di toccare! <strong>扫码 (sǎo mǎ)</strong> è ovunque: metro, ristoranti, negozi, bici.'
+    }
+  };
+
+  function detectInitialLang() {
+    try {
+      const stored = localStorage.getItem('lang');
+      if (SUPPORTED_LANGS.includes(stored)) return stored;
+    } catch (e) {}
+    const nav = (navigator.language || 'en').toLowerCase();
+    return nav.startsWith('it') ? 'it' : 'en';
+  }
+
+  let currentLang = detectInitialLang();
+  let contentData = null;
+
+  function t(field) {
+    if (field == null) return '';
+    if (typeof field === 'string') return field;
+    return field[currentLang] || field.en || Object.values(field)[0] || '';
+  }
+
   const fieldPrefix = cls => cls === 'phrase-card' ? 'phrase-' : '';
   const gridClass = cls => cls === 'phrase-card' ? 'phrase-grid' : 'grid';
 
@@ -425,7 +502,7 @@
     for (const field of ['hanzi', 'pinyin', 'meaning']) {
       const el = document.createElement('div');
       el.className = prefix + field;
-      el.textContent = entry[field];
+      el.textContent = t(entry[field]);
       card.appendChild(el);
     }
     const icon = document.createElement('div');
@@ -445,7 +522,7 @@
       hanzi.className = 'tab-hanzi';
       hanzi.textContent = tab.hanziLabel;
       btn.appendChild(hanzi);
-      btn.appendChild(document.createTextNode(tab.label));
+      btn.appendChild(document.createTextNode(t(tab.label)));
       container.appendChild(btn);
     });
   }
@@ -455,7 +532,7 @@
     section.className = 'section';
     const title = document.createElement('div');
     title.className = 'section-title';
-    title.textContent = sec.title;
+    title.textContent = t(sec.title);
     const grid = document.createElement('div');
     grid.className = gridClass(cardClass);
     sec.entries.forEach(entry => grid.appendChild(renderCard(entry, cardClass)));
@@ -469,7 +546,7 @@
     if (sub.title) {
       const title = document.createElement('div');
       title.className = 'subsection-title';
-      title.textContent = sub.title;
+      title.textContent = t(sub.title);
       wrap.appendChild(title);
     }
     sub.sections.forEach(sec => wrap.appendChild(renderSection(sec, cardClass)));
@@ -489,6 +566,53 @@
       container.appendChild(panel);
     });
   }
+
+  function applyChrome() {
+    document.documentElement.lang = currentLang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (CHROME[key]) el.textContent = CHROME[key][currentLang];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.dataset.i18nHtml;
+      if (CHROME[key]) el.innerHTML = CHROME[key][currentLang];
+    });
+    document.querySelectorAll('.lang-switch button').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === currentLang);
+    });
+  }
+
+  function rerenderContent() {
+    if (!contentData) return;
+    const tabsContainer = document.getElementById('tabs');
+    const panelsContainer = document.getElementById('panels');
+    const activeTab = document.querySelector('.tab.active');
+    const activeId = activeTab ? activeTab.dataset.tab : contentData.tabs[0].id;
+    tabsContainer.innerHTML = '';
+    panelsContainer.innerHTML = '';
+    renderTabs(contentData.tabs, tabsContainer);
+    renderPanels(contentData.tabs, panelsContainer);
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === activeId));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + activeId));
+    wireTabs();
+    wireCards();
+  }
+
+  function setLang(lang) {
+    if (!SUPPORTED_LANGS.includes(lang) || lang === currentLang) return;
+    currentLang = lang;
+    try { localStorage.setItem('lang', lang); } catch (e) {}
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    document.querySelectorAll('.speaking').forEach(el => el.classList.remove('speaking'));
+    applyChrome();
+    rerenderContent();
+  }
+
+  document.querySelectorAll('.lang-switch button').forEach(btn => {
+    btn.addEventListener('click', () => setLang(btn.dataset.lang));
+  });
+
+  applyChrome();
 
   function wireTabs() {
     const tabs = document.querySelectorAll('.tab');
@@ -563,6 +687,7 @@
       return r.json();
     })
     .then(data => {
+      contentData = data;
       renderTabs(data.tabs, document.getElementById('tabs'));
       renderPanels(data.tabs, document.getElementById('panels'));
       wireTabs();
@@ -572,7 +697,9 @@
       const panels = document.getElementById('panels');
       const msg = document.createElement('div');
       msg.className = 'load-error';
-      msg.textContent = 'Failed to load content. Please reconnect and refresh.';
+      msg.textContent = currentLang === 'it'
+        ? 'Impossibile caricare i contenuti. Riconnettiti e aggiorna.'
+        : 'Failed to load content. Please reconnect and refresh.';
       panels.appendChild(msg);
       console.error('content load failed:', err);
     });
