@@ -1,5 +1,5 @@
-const CACHE = 'chinese-travel-v5';
-const ASSETS = ['./', './index.html', './content.json'];
+const CACHE = 'chinese-travel-v6';
+const ASSETS = ['./', './index.html', './content.json', './style.css'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
