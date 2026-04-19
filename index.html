@@ -464,6 +464,38 @@
     pointer-events: none;
     user-select: none;
   }
+
+  .search-wrap {
+    max-width: 860px;
+    margin: 0 auto 1.2rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 260px;
+    padding: 0.42rem 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .search-input:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 2px rgba(192,57,43,0.12);
+  }
+
+  .search-input::placeholder { color: var(--muted); opacity: 0.7; }
+
+  /* remove native clear button on webkit */
+  .search-input::-webkit-search-cancel-button { -webkit-appearance: none; }
 </style>
 </head>
 <body>
@@ -487,6 +519,9 @@
 </div>
 
 <div class="tabs" id="tabs" role="tablist"></div>
+<div class="search-wrap">
+  <input type="search" id="searchInput" class="search-input" autocomplete="off" autocorrect="off" spellcheck="false">
+</div>
 <div id="panels"></div>
 
 <div class="tip-box">
@@ -556,6 +591,10 @@
     favoritesEmpty: {
       en: 'Tap the ☆ on any card to save it here.',
       it: 'Tocca la ☆ su una carta per salvarla qui.'
+    },
+    searchPlaceholder: {
+      en: 'Search…',
+      it: 'Cerca…'
     }
   };
 
@@ -594,6 +633,8 @@
     icon.className = 'speaker';
     icon.innerHTML = SPEAKER_SVG;
     card.appendChild(icon);
+
+    card.dataset.search = [entry.hanzi, entry.pinyin, t(entry.meaning)].join(' ').toLowerCase();
 
     const star = document.createElement('button');
     star.type = 'button';
@@ -740,6 +781,8 @@
     document.querySelectorAll('.lang-switch button').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.lang === currentLang);
     });
+    const si = document.getElementById('searchInput');
+    if (si) si.placeholder = CHROME.searchPlaceholder[currentLang];
   }
 
   function rerenderContent() {
@@ -766,6 +809,8 @@
     document.querySelectorAll('.speaking').forEach(el => el.classList.remove('speaking'));
     applyChrome();
     rerenderContent();
+    const si = document.getElementById('searchInput');
+    if (si && si.value) filterCards(si.value);
   }
 
   document.querySelectorAll('.lang-switch button').forEach(btn => {
@@ -773,6 +818,23 @@
   });
 
   applyChrome();
+
+  function filterCards(query) {
+    const q = query.trim().toLowerCase();
+    const activePanel = document.querySelector('.tab-panel.active');
+    if (!activePanel) return;
+    activePanel.querySelectorAll('.card, .phrase-card').forEach(card => {
+      card.style.display = (!q || card.dataset.search.includes(q)) ? '' : 'none';
+    });
+    activePanel.querySelectorAll('.section').forEach(section => {
+      const any = [...section.querySelectorAll('.card, .phrase-card')].some(c => c.style.display !== 'none');
+      section.style.display = any ? '' : 'none';
+    });
+    activePanel.querySelectorAll('.subsection').forEach(sub => {
+      const any = [...sub.querySelectorAll('.section')].some(s => s.style.display !== 'none');
+      sub.style.display = any ? '' : 'none';
+    });
+  }
 
   function wireTabs() {
     const tabs = document.querySelectorAll('.tab');
@@ -783,6 +845,8 @@
         document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + target));
         if (window.speechSynthesis) window.speechSynthesis.cancel();
         document.querySelectorAll('.speaking').forEach(el => el.classList.remove('speaking'));
+        const si = document.getElementById('searchInput');
+        if (si) si.value = '';
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     });
@@ -862,6 +926,8 @@
       panels.appendChild(msg);
       console.error('content load failed:', err);
     });
+
+  document.getElementById('searchInput').addEventListener('input', e => filterCards(e.target.value));
 
   // Register service worker for offline support
   if ('serviceWorker' in navigator) {
