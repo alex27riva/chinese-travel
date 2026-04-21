@@ -283,6 +283,60 @@
           ]
         }
       ]
+    },
+    {
+      "id": "visa",
+      "label": {"en": "Visa Free", "it": "Senza visto"},
+      "hanziLabel": "免签",
+      "cardClass": "app-card",
+      "intro": {"en": "Chinese passport holders can visit these countries without a visa or with visa on arrival. Requirements may vary—check before traveling.", "it": "I possessori di passaporto cinese possono visitare questi paesi senza visto o con visto all'arrivo. I requisiti possono variare—verifica prima di viaggiare."},
+      "sections": [
+        {
+          "title": {"en": "Asia", "it": "Asia"},
+          "entries": [
+            {"icon": "🇹🇭", "hanzi": "泰国", "pinyin": "tài guó", "name": "Thailand", "description": {"en": "Visa-free 30 days (until Nov 2025)", "it": "Senza visto 30 giorni (fino a Nov 2025)"}},
+            {"icon": "🇸🇬", "hanzi": "新加坡", "pinyin": "xīn jiā pō", "name": "Singapore", "description": {"en": "Visa-free 30 days", "it": "Senza visto 30 giorni"}},
+            {"icon": "🇲🇾", "hanzi": "马来西亚", "pinyin": "mǎ lái xī yà", "name": "Malaysia", "description": {"en": "Visa-free 30 days", "it": "Senza visto 30 giorni"}},
+            {"icon": "🇮🇩", "hanzi": "印度尼西亚", "pinyin": "yìn dù ní xī yà", "name": "Indonesia", "description": {"en": "Visa on arrival 30 days", "it": "Visto all'arrivo 30 giorni"}},
+            {"icon": "🇯🇵", "hanzi": "日本", "pinyin": "rì běn", "name": "Japan", "description": {"en": "Visa-free 90 days", "it": "Senza visto 90 giorni"}},
+            {"icon": "🇰🇷", "hanzi": "韩国", "pinyin": "hán guó", "name": "South Korea", "description": {"en": "Visa-free 90 days", "it": "Senza visto 90 giorni"}},
+            {"icon": "🇭🇰", "hanzi": "香港", "pinyin": "xiāng gǎng", "name": "Hong Kong", "description": {"en": "Visa-free 90 days", "it": "Senza visto 90 giorni"}},
+            {"icon": "🇲🇴", "hanzi": "澳门", "pinyin": "ào mén", "name": "Macau", "description": {"en": "Visa-free 30 days", "it": "Senza visto 30 giorni"}},
+            {"icon": "🇦🇪", "hanzi": "阿联酋", "pinyin": "ā lián qiú", "name": "UAE", "description": {"en": "Visa-free 30 days", "it": "Senza visto 30 giorni"}}
+          ]
+        },
+        {
+          "title": {"en": "Europe", "it": "Europa"},
+          "entries": [
+            {"icon": "🇨🇭", "hanzi": "瑞士", "pinyin": "ruì shì", "name": "Switzerland", "description": {"en": "Visa-free 90 days", "it": "Senza visto 90 giorni"}},
+            {"icon": "🇳🇴", "hanzi": "挪威", "pinyin": "nuó wēi", "name": "Norway", "description": {"en": "Visa-free 90 days", "it": "Senza visto 90 giorni"}},
+            {"icon": "🇮🇸", "hanzi": "冰岛", "pinyin": "bīng dǎo", "name": "Iceland", "description": {"en": "Visa-free 90 days", "it": "Senza visto 90 giorni"}}
+          ]
+        },
+        {
+          "title": {"en": "Americas", "it": "Americhe"},
+          "entries": [
+            {"icon": "🇨🇦", "hanzi": "加拿大", "pinyin": "jiā ná dà", "name": "Canada", "description": {"en": "Visa-free 6 days (transit via airport)", "it": "Senza visto 6 giorni (transito via aereo)"}},
+            {"icon": "🇺🇸", "hanzi": "美国", "pinyin": "měi guó", "name": "USA", "description": {"en": "Transit visa required", "it": "Visto di transito richiesto"}},
+            {"icon": "🇦🇷", "hanzi": "阿根廷", "pinyin": "ā gēn tíng", "name": "Argentina", "description": {"en": "Visa-free 90 days", "it": "Senza visto 90 giorni"}}
+          ]
+        },
+        {
+          "title": {"en": "Oceania", "it": "Oceania"},
+          "entries": [
+            {"icon": "🇦🇺", "hanzi": "澳大利亚", "pinyin": "ào dà lì yà", "name": "Australia", "description": {"en": "Transit visa may be required", "it": "Visto di transito potrebbe essere richiesto"}},
+            {"icon": "🇳🇿", "hanzi": "新西兰", "pinyin": "xīn xī lán", "name": "New Zealand", "description": {"en": "Visa-free 30 days", "it": "Senza visto 30 giorni"}}
+          ]
+        },
+        {
+          "title": {"en": "Africa & Middle East", "it": "Africa e Medio Oriente"},
+          "entries": [
+            {"icon": "🇲🇦", "hanzi": "摩洛哥", "pinyin": "mó luò gē", "name": "Morocco", "description": {"en": "Visa-free 90 days", "it": "Senza visto 90 giorni"}},
+            {"icon": "🇪🇬", "hanzi": "埃及", "pinyin": "āi jí", "name": "Egypt", "description": {"en": "Visa on arrival 30 days", "it": "Visto all'arrivo 30 giorni"}},
+            {"icon": "🇿🇦", "hanzi": "南非", "pinyin": "nán fēi", "name": "South Africa", "description": {"en": "Visa-free 30 days", "it": "Senza visto 30 giorni"}}
+          ]
+        }
+      ]
     }
   ]
 }

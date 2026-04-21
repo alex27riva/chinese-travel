@@ -1,4 +1,4 @@
-const CACHE = 'handy-v8';
+const CACHE = 'handy-v9';
 const ASSETS = ['./', './index.html', './content.json', './style.css', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', event => {
