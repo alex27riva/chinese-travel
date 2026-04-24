@@ -21,6 +21,7 @@
 </head>
 <body>
 
+<button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode"></button>
 <div class="lang-switch" role="group" aria-label="Language">
   <button data-lang="en" type="button">EN</button>
   <button data-lang="it" type="button">IT</button>
@@ -53,7 +54,7 @@
 <div id="panels"></div>
 
 
-<div class="app-version" aria-hidden="true">v0.6.0</div>
+<div class="app-version" aria-hidden="true">v0.7.0</div>
 
 <script>
   // Show install hint only on iOS/Android, hide if standalone or dismissed
@@ -146,6 +147,23 @@
     const key = collapseKey(tabId, titleObj);
     if (collapsedGroups.has(key)) collapsedGroups.delete(key); else collapsedGroups.add(key);
     try { localStorage.setItem(COLLAPSED_KEY, JSON.stringify([...collapsedGroups])); } catch (e) {}
+  }
+
+  const THEME_KEY = 'theme';
+  let currentTheme = 'light';
+  try {
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved === 'dark' || saved === 'light') currentTheme = saved;
+    else if (window.matchMedia('(prefers-color-scheme: dark)').matches) currentTheme = 'dark';
+  } catch (e) {}
+  document.documentElement.dataset.theme = currentTheme;
+
+  function setTheme(theme) {
+    currentTheme = theme;
+    document.documentElement.dataset.theme = theme;
+    try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
+    const btn = document.getElementById('themeBtn');
+    if (btn) btn.textContent = theme === 'dark' ? '☀︎' : '☾';
   }
 
   const CHROME = {
@@ -481,6 +499,12 @@
   document.querySelectorAll('.lang-switch button').forEach(btn => {
     btn.addEventListener('click', () => setLang(btn.dataset.lang));
   });
+
+  const themeBtn = document.getElementById('themeBtn');
+  if (themeBtn) {
+    themeBtn.textContent = currentTheme === 'dark' ? '☀︎' : '☾';
+    themeBtn.addEventListener('click', () => setTheme(currentTheme === 'dark' ? 'light' : 'dark'));
+  }
 
   applyChrome();
 
