@@ -4,14 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Offline-capable PWA for Chinese travel vocabulary and phrases. Designed to be installed on iOS via Safari → Add to Home Screen. No build system, no dependencies, no tests.
+Offline-capable PWA for Chinese travel vocabulary and phrases. Installable on iOS (Safari → Add to Home Screen) and Android (Chrome install prompt via manifest). No build system, no dependencies, no tests.
 
-Four files make up the app:
+Core files:
 
 - `index.html` — app shell (markup, renderer JS). Contains no vocabulary data.
 - `style.css` — all styles. CSS custom properties in `:root` drive theming.
 - `content.json` — all vocabulary and phrase data (tabs → sections → entries).
 - `sw.js` — service worker providing cache-first offline support.
+- `manifest.json` — Web App Manifest for Android PWA install prompt.
+- `icon.svg` — app icon (SVG, referenced by manifest and precached by SW).
 
 ## Running / previewing
 
@@ -46,7 +48,7 @@ Top-right fixed toggle (EN / IT). State is module-level (`currentLang` in the sc
 Top-left fixed button (☾ / ☀︎). State is module-level (`currentTheme`), persisted to `localStorage.theme`, initialized from `localStorage` first then `prefers-color-scheme` fallback. Applied synchronously before render via `document.documentElement.dataset.theme = currentTheme` to prevent flash. All colors are CSS custom properties in `:root`; the `[data-theme="dark"]` block in `style.css` overrides them. No JS re-render needed on toggle — CSS handles everything. `setTheme(theme)` is the toggle function.
 
 ### Collapsible sections
-Vocab subsections (App UI / Food) and phrase sections collapse on tap. State lives in `localStorage.collapsedGroups` as a JSON array of `"{tabId}:{titleInEnglish}"` keys — English title used as stable ID so state survives language switch. `isCollapsed(tabId, titleObj)` and `toggleCollapse(tabId, titleObj)` manage state. The `.is-collapsed` class drives hide/show via CSS (`subsection.is-collapsed > .section { display:none }` and `section.is-collapsed > .grid { display:none }`). Chevron SVG rotates 90° when collapsed. During search, the `.search-active` class on the active panel overrides collapse CSS so matches are always visible.
+Vocab subsections (App UI / Food / Signs) and phrase sections collapse on tap. State lives in `localStorage.collapsedGroups` as a JSON array of `"{tabId}:{titleInEnglish}"` keys — English title used as stable ID so state survives language switch. `isCollapsed(tabId, titleObj)` and `toggleCollapse(tabId, titleObj)` manage state. The `.is-collapsed` class drives hide/show via CSS (`subsection.is-collapsed > .section { display:none }` and `section.is-collapsed > .grid { display:none }`). Chevron SVG rotates 90° when collapsed. During search, the `.search-active` class on the active panel overrides collapse CSS so matches are always visible.
 
 ### Favorites
 A star button (top-left of every card, mirroring the top-right speaker) toggles an entry into a dedicated **Favorites** tab (`收藏`, rightmost). State lives in `localStorage.favorites` as a JSON array of `"{tabId}:{hanzi}"` keys — so `菜单` in `vocab` and `菜单` in `phrases` star independently. The Favorites tab and panel are **renderer-injected** (not present in `content.json`): `renderTabs` appends the tab button, `renderPanels` appends the panel via `renderFavoritesPanel()`. The empty-state and tab-label strings live in `CHROME` (`favoritesLabel`, `favoritesEmpty`). Toggling a star calls `refreshFavoritesPanel()` to rebuild just `#tab-favorites` in place, so starring from any tab (including from within Favorites) keeps the view consistent. Star clicks use `stopPropagation()` so TTS doesn't fire.
@@ -55,9 +57,10 @@ A star button (top-left of every card, mirroring the top-right speaker) toggles 
 One generic click handler on `.card, .phrase-card` reads `.hanzi` or `.phrase-hanzi` and speaks it via `window.speechSynthesis`. Voice selection prefers `zh-CN`, falls back to any `zh-*`. `synth.cancel()` runs on tab switch and before each utterance to prevent overlap. The `.speaking` class is the visual-feedback hook.
 
 ### Offline / PWA
-- `sw.js` precaches `./`, `./index.html`, `./content.json`, `./style.css` on install and serves cache-first with a network fallback that also populates the cache. Bump the `CACHE` constant when shipping a change you want users to pick up — otherwise the old version stays cached indefinitely.
-- iOS install uses the `apple-mobile-web-app-*` meta tags and inline SVG data-URI icons. No `manifest.json` — iOS doesn't need one, and the app isn't targeting Android install.
-- `@media (display-mode: standalone)` hides the install hint when launched from the home screen; the hint is also dismissible with `localStorage.hintDismissed`.
+- `sw.js` precaches `./`, `./index.html`, `./content.json`, `./style.css`, `./manifest.json`, `./icon.svg` on install and serves cache-first with a network fallback that also populates the cache. Bump the `CACHE` constant when shipping a change you want users to pick up — otherwise the old version stays cached indefinitely.
+- iOS install uses `apple-mobile-web-app-*` meta tags and an inline SVG data-URI `apple-touch-icon`. Android install uses `manifest.json` (linked via `<link rel="manifest">`), which provides name, theme color, display mode, and `icon.svg`. The icon is SVG-only (`"purpose": "any"`) — modern Chrome supports it, but older Android may not render it as an adaptive icon.
+- Install hint is platform-aware: iOS shows Safari share instructions; Android shows browser menu / Install button instructions. Detection uses UA sniffing (`/android/i`). Both hints share the same dismissible banner (`localStorage.hintDismissed`).
+- `@media (display-mode: standalone)` hides the install hint when launched from the home screen.
 
 ### localStorage keys
 | Key | Format | Purpose |
@@ -67,6 +70,7 @@ One generic click handler on `.card, .phrase-card` reads `.hanzi` or `.phrase-ha
 | `favorites` | JSON array of `"tabId:hanzi"` | Starred entries |
 | `collapsedGroups` | JSON array of `"tabId:titleEn"` | Collapsed sections |
 | `hintDismissed` | `'1'` | Install banner dismissed |
+| `pinyinHidden` | `'1'` \| `'0'` | Hide pinyin romanization |
 
 ## Editing conventions
 
@@ -89,5 +93,4 @@ Rough priority order — high impact items first.
 - **Hotel check-in phrases** — currently missing from phrases tab
 
 ### Polish
-- **Android PWA manifest** — `manifest.json` for Play Store / Android install prompt; app currently iOS-only
-- **Swipe left/right** — tab navigation gesture on mobile
+- **Maskable icon** — add a PNG or SVG with `"purpose": "maskable"` to manifest for proper adaptive icons on Android

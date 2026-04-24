@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Hàndy</title>
 
 <!-- PWA meta tags -->
@@ -56,7 +56,7 @@
 <div id="panels"></div>
 
 
-<div class="app-version" aria-hidden="true">v0.9.0</div>
+<div class="app-version" aria-hidden="true">v0.9.1</div>
 
 <script>
   // Show install hint only on iOS/Android, hide if standalone or dismissed
@@ -582,21 +582,42 @@
     });
   }
 
+  function switchToTab(targetId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === targetId));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + targetId));
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    document.querySelectorAll('.speaking').forEach(el => el.classList.remove('speaking'));
+    document.querySelectorAll('.card.revealed, .phrase-card.revealed').forEach(c => c.classList.remove('revealed'));
+    const si = document.getElementById('searchInput');
+    if (si) si.value = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   function wireTabs() {
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const target = tab.dataset.tab;
-        tabs.forEach(t => t.classList.toggle('active', t === tab));
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + target));
-        if (window.speechSynthesis) window.speechSynthesis.cancel();
-        document.querySelectorAll('.speaking').forEach(el => el.classList.remove('speaking'));
-        document.querySelectorAll('.card.revealed, .phrase-card.revealed').forEach(c => c.classList.remove('revealed'));
-        const si = document.getElementById('searchInput');
-        if (si) si.value = '';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => switchToTab(tab.dataset.tab));
     });
+  }
+
+  function wireSwipe() {
+    const panels = document.getElementById('panels');
+    let startX = 0, startY = 0;
+    panels.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+    panels.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+      const tabs = Array.from(document.querySelectorAll('.tab'));
+      const activeIdx = tabs.findIndex(t => t.classList.contains('active'));
+      const nextIdx = dx < 0 ? activeIdx + 1 : activeIdx - 1;
+      if (nextIdx >= 0 && nextIdx < tabs.length) {
+        switchToTab(tabs[nextIdx].dataset.tab);
+        tabs[nextIdx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }, { passive: true });
   }
 
   // TTS
@@ -659,6 +680,7 @@
       renderPanels(data.tabs, document.getElementById('panels'));
       wireTabs();
       wireCards();
+      wireSwipe();
     })
     .catch(err => {
       const panels = document.getElementById('panels');
