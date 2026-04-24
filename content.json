@@ -7,7 +7,7 @@
       "cardClass": "card",
       "subsections": [
         {
-          "title": {"en": "Apps", "it": "App"},
+          "title": {"en": "App UI", "it": "App UI"},
           "sections": [
             {
               "title": {"en": "Navigation & Structure", "it": "Navigazione e struttura"},
