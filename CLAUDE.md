@@ -83,7 +83,6 @@ Rough priority order — high impact items first.
 ### Features
 - **Cross-tab search** — current search only filters the active tab; a global search across all tabs would be significantly more useful
 - **Slow TTS** — long-press a card to speak at 0.7× rate; critical for learning unfamiliar tones
-- **Hide pinyin mode** — toggle to hide romanization and force reading hanzi; localStorage toggle, CSS-driven
 - **Quiz / flip mode** — tap to reveal meaning; per-card interaction, no new data needed
 
 ### Content
