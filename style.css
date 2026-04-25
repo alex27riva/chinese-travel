@@ -480,6 +480,7 @@ h1 {
 }
 
 .search-wrap {
+  position: relative;
   max-width: 860px;
   margin: 0 auto 1.2rem;
   display: flex;
@@ -518,6 +519,31 @@ h1 {
 
 /* remove native clear button on webkit */
 .search-input::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+.search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input { padding-right: 1.6rem; }
+
+.search-clear {
+  position: absolute;
+  right: 0.55rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1;
+  padding: 0.2rem 0.3rem;
+  border-radius: 50%;
+  transition: color 0.15s;
+}
+.search-clear:hover { color: var(--ink); }
 
 .fav-btn {
   flex-shrink: 0;
@@ -786,6 +812,28 @@ body.fav-open {
   border-color: var(--red);
   background: var(--focus-ring);
 }
+
+/* ── Global search: show all panels stacked ──────────────── */
+#panels.global-search .tab-panel          { display: block; }
+#panels.global-search .tab-panel.no-match { display: none; }
+
+/* ── Per-panel tab label (visible in global search only) ─── */
+.panel-search-label {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 1.8rem 0 0.5rem;
+  margin-bottom: 0.4rem;
+  border-top: 1px solid var(--border);
+}
+#panels.global-search .tab-panel:first-child .panel-search-label {
+  padding-top: 0;
+  border-top: none;
+}
+#panels.global-search .panel-search-label { display: block; }
 
 /* Theme toggle button */
 .theme-btn {

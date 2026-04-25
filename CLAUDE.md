@@ -96,7 +96,6 @@ Toolbar button (？). Toggles `data-quiz="on"` on `<html>`. In quiz mode, `.piny
 Rough priority order — high impact items first.
 
 ### Features
-- **Cross-tab search** — current search only filters the active tab; a global search across all tabs would be significantly more useful
 - **Slow TTS** — long-press a card to speak at 0.7× rate; critical for learning unfamiliar tones
 
 ### Polish
