@@ -279,7 +279,9 @@
             {"hanzi": "支付宝可以吗?", "pinyin": "zhī fù bǎo kě yǐ ma?", "meaning": {"en": "Can I pay with Alipay?", "it": "Posso pagare con Alipay?"}},
             {"hanzi": "微信支付", "pinyin": "wēi xìn zhī fù", "meaning": {"en": "WeChat Pay", "it": "WeChat Pay"}},
             {"hanzi": "现金", "pinyin": "xiàn jīn", "meaning": {"en": "Cash", "it": "Contanti"}},
-            {"hanzi": "发票", "pinyin": "fā piào", "meaning": {"en": "Receipt / Invoice", "it": "Ricevuta / Fattura"}}
+            {"hanzi": "发票", "pinyin": "fā piào", "meaning": {"en": "Receipt / Invoice", "it": "Ricevuta / Fattura"}},
+            {"hanzi": "可以分开付款吗?", "pinyin": "kě yǐ fēn kāi fù kuǎn ma?", "meaning": {"en": "Can we split the payment?", "it": "Possiamo dividere il pagamento?"}},
+            {"hanzi": "我分几次转给你", "pinyin": "wǒ fēn jǐ cì zhuǎn gěi nǐ", "meaning": {"en": "I'll send it in multiple transfers", "it": "Te lo mando in più pagamenti"}}
           ]
         },
         {
