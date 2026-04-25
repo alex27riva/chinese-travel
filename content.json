@@ -212,7 +212,7 @@
     },
     {
       "id": "phrases",
-      "label": {"en": "Travel Phrases", "it": "Frasi di viaggio"},
+      "label": {"en": "Phrases", "it": "Frasi"},
       "hanziLabel": "短语",
       "cardClass": "phrase-card",
       "sections": [
@@ -309,6 +309,52 @@
             {"hanzi": "叫警察", "pinyin": "jiào jǐng chá", "meaning": {"en": "Call the police", "it": "Chiama la polizia"}},
             {"hanzi": "我的护照丢了", "pinyin": "wǒ de hù zhào diū le", "meaning": {"en": "I lost my passport", "it": "Ho perso il passaporto"}},
             {"hanzi": "意大利大使馆", "pinyin": "yì dà lì dà shǐ guǎn", "meaning": {"en": "Italian embassy", "it": "Ambasciata italiana"}}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "medical",
+      "label": {"en": "Medical", "it": "Medico"},
+      "hanziLabel": "医疗",
+      "cardClass": "phrase-card",
+      "sections": [
+        {
+          "title": {"en": "Symptoms", "it": "Sintomi"},
+          "entries": [
+            {"hanzi": "我生病了", "pinyin": "wǒ shēng bìng le", "meaning": {"en": "I'm sick", "it": "Sto male"}},
+            {"hanzi": "发烧", "pinyin": "fā shāo", "meaning": {"en": "Fever", "it": "Febbre"}},
+            {"hanzi": "头痛", "pinyin": "tóu tòng", "meaning": {"en": "Headache", "it": "Mal di testa"}},
+            {"hanzi": "肚子痛", "pinyin": "dù zi tòng", "meaning": {"en": "Stomachache", "it": "Mal di stomaco"}},
+            {"hanzi": "恶心", "pinyin": "ě xīn", "meaning": {"en": "Nausea", "it": "Nausea"}},
+            {"hanzi": "拉肚子", "pinyin": "lā dù zi", "meaning": {"en": "Diarrhea", "it": "Diarrea"}},
+            {"hanzi": "我头晕", "pinyin": "wǒ tóu yūn", "meaning": {"en": "I'm dizzy", "it": "Ho le vertigini"}},
+            {"hanzi": "过敏", "pinyin": "guò mǐn", "meaning": {"en": "Allergy", "it": "Allergia"}},
+            {"hanzi": "我对...过敏", "pinyin": "wǒ duì ... guò mǐn", "meaning": {"en": "I'm allergic to...", "it": "Sono allergico a..."}},
+            {"hanzi": "我对青霉素过敏", "pinyin": "wǒ duì qīng méi sù guò mǐn", "meaning": {"en": "I'm allergic to penicillin", "it": "Sono allergico alla penicillina"}},
+            {"hanzi": "受伤了", "pinyin": "shòu shāng le", "meaning": {"en": "I'm injured", "it": "Sono ferito"}}
+          ]
+        },
+        {
+          "title": {"en": "Pharmacy", "it": "Farmacia"},
+          "entries": [
+            {"hanzi": "药店在哪里?", "pinyin": "yào diàn zài nǎ lǐ?", "meaning": {"en": "Where is the pharmacy?", "it": "Dov'è la farmacia?"}},
+            {"hanzi": "止痛药", "pinyin": "zhǐ tòng yào", "meaning": {"en": "Painkiller", "it": "Antidolorifico"}},
+            {"hanzi": "退烧药", "pinyin": "tuì shāo yào", "meaning": {"en": "Fever reducer", "it": "Antipiretico"}},
+            {"hanzi": "创可贴", "pinyin": "chuāng kě tiē", "meaning": {"en": "Band-aid", "it": "Cerotto"}},
+            {"hanzi": "处方药", "pinyin": "chǔ fāng yào", "meaning": {"en": "Prescription medicine", "it": "Farmaco da prescrizione"}},
+            {"hanzi": "有没有...?", "pinyin": "yǒu méi yǒu ...?", "meaning": {"en": "Do you have...?", "it": "Avete...?"}}
+          ]
+        },
+        {
+          "title": {"en": "Hospital & Emergency", "it": "Ospedale ed emergenze"},
+          "entries": [
+            {"hanzi": "医院在哪里?", "pinyin": "yī yuàn zài nǎ lǐ?", "meaning": {"en": "Where is the hospital?", "it": "Dov'è l'ospedale?"}},
+            {"hanzi": "急诊室", "pinyin": "jí zhěn shì", "meaning": {"en": "Emergency room", "it": "Pronto soccorso"}},
+            {"hanzi": "叫救护车", "pinyin": "jiào jiù hù chē", "meaning": {"en": "Call an ambulance", "it": "Chiama un'ambulanza"}},
+            {"hanzi": "我需要看医生", "pinyin": "wǒ xū yào kàn yī shēng", "meaning": {"en": "I need to see a doctor", "it": "Ho bisogno di un medico"}},
+            {"hanzi": "我有医疗保险", "pinyin": "wǒ yǒu yī liáo bǎo xiǎn", "meaning": {"en": "I have medical insurance", "it": "Ho un'assicurazione medica"}},
+            {"hanzi": "救命!", "pinyin": "jiù mìng!", "meaning": {"en": "Help!", "it": "Aiuto!"}}
           ]
         }
       ]

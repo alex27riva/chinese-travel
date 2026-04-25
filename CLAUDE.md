@@ -99,8 +99,5 @@ Rough priority order — high impact items first.
 - **Cross-tab search** — current search only filters the active tab; a global search across all tabs would be significantly more useful
 - **Slow TTS** — long-press a card to speak at 0.7× rate; critical for learning unfamiliar tones
 
-### Content
-- **Medical / hospital tab** — fever, allergy, pharmacy, emergency phrases; high value for travelers
-
 ### Polish
 - **Maskable icon** — add a PNG or SVG with `"purpose": "maskable"` to manifest for proper adaptive icons on Android
