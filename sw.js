@@ -1,4 +1,6 @@
-const CACHE = 'handy-v35';
+// Single source of truth for the app version: index.html reads this name back out
+// of Cache Storage to render .app-version. Bump it on every user-visible change.
+const CACHE = 'handy-v0.16.0';
 const ASSETS = ['./', './index.html', './content.json', './style.css', './manifest.json', './icon.svg', './apple-touch-icon.png'];
 
 self.addEventListener('install', event => {

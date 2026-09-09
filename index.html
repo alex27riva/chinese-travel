@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Hàndy</title>
 
 <!-- PWA meta tags -->
@@ -50,11 +50,11 @@
   <button class="fav-btn" id="favBtn" aria-label="View favorites" title="Favorites">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
   </button>
-  <button class="pinyin-btn" id="pinyinBtn" aria-label="Toggle pinyin" title="Hide/show pinyin">拼</button>
+  <button class="pinyin-btn" id="pinyinBtn" aria-label="Toggle pinyin" title="Hide/show pinyin"><span lang="zh-CN">拼</span></button>
   <button class="quiz-btn" id="quizBtn" aria-label="Toggle quiz mode" title="Quiz mode">?</button>
   <button class="about-btn" id="aboutBtn" aria-label="About and tips" aria-expanded="false" title="About">i</button>
   <div class="about-panel" id="aboutPanel" hidden>
-    <div class="about-name">hàn <span class="about-hanzi">汉</span> + handy</div>
+    <div class="about-name">hàn <span class="about-hanzi" lang="zh-CN">汉</span> + handy</div>
     <div class="about-tagline" data-i18n="aboutTagline">hàn = Chinese · handy = useful</div>
     <ul class="about-tips" data-i18n-html="aboutTips"></ul>
   </div>
@@ -66,7 +66,7 @@
 <button class="toast toast-update" id="updateToast" type="button" hidden>
   <span aria-hidden="true">↻</span> <span data-i18n="updateReady">New version ready · tap to reload</span>
 </button>
-<div class="app-version" aria-hidden="true">v0.15.0</div>
+<div class="app-version" id="appVersion" aria-hidden="true"></div>
 
 <script>
   // Show install hint only on iOS/Android, hide if standalone or dismissed
@@ -216,6 +216,19 @@
     if (pinyinBtn) pinyinBtn.disabled = on;
   }
 
+  // Single owner of the active-tab DOM state (classes + aria), so the tab strip
+  // and the panels can never disagree about which tab is selected.
+  function setActiveTab(targetId) {
+    document.querySelectorAll('.tab').forEach(tab => {
+      const on = tab.dataset.tab === targetId;
+      tab.classList.toggle('active', on);
+      tab.setAttribute('aria-selected', String(on));
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => {
+      p.classList.toggle('active', p.id === 'tab-' + targetId);
+    });
+  }
+
   function handleCardClick(card) {
     if (card.dataset.longPressed) {
       delete card.dataset.longPressed;
@@ -224,8 +237,7 @@
     if (document.getElementById('panels').classList.contains('global-search')) {
       const tabId = card.dataset.tab;
       if (tabId) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tabId));
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + tabId));
+        setActiveTab(tabId);
         document.getElementById('panels').classList.remove('global-search');
         document.querySelectorAll('.tab-panel:not(.active)').forEach(p => {
           p.classList.remove('search-active', 'no-match');
@@ -279,6 +291,14 @@
         + '<li><strong>拼</strong> nasconde il pinyin · <strong>?</strong> avvia la modalità quiz</li>'
         + '<li>Funziona completamente <strong>offline</strong> una volta installata</li>'
     },
+    ttsUnsupported: {
+      en: 'Speech is not supported in this browser',
+      it: 'La sintesi vocale non è supportata in questo browser'
+    },
+    quizHint: {
+      en: 'tap to reveal',
+      it: 'tocca per scoprire'
+    },
     copied: {
       en: 'Copied',
       it: 'Copiato'
@@ -313,6 +333,21 @@
     }
   };
 
+  // Version lives in exactly one place: the CACHE constant in sw.js (the service
+  // worker only reinstalls when its own bytes change, so the literal has to live
+  // there). The page reads it back out of Cache Storage instead of duplicating it.
+  const CACHE_PREFIX = 'handy-';
+  function showAppVersion() {
+    const el = document.getElementById('appVersion');
+    if (!el || !window.caches) return;
+    // caches.keys() is in creation order, so the last handy-* key is the current one
+    caches.keys()
+      .then(keys => keys.filter(k => k.startsWith(CACHE_PREFIX)).pop())
+      .then(key => { if (key) el.textContent = key.slice(CACHE_PREFIX.length); })
+      .catch(() => {});
+  }
+  showAppVersion();
+
   function detectInitialLang() {
     try {
       const stored = localStorage.getItem('lang');
@@ -346,9 +381,14 @@
     const prefix = fieldPrefix(cardClass);
     const card = document.createElement('div');
     card.className = cardClass;
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
     for (const field of ['hanzi', 'pinyin', 'meaning']) {
       const el = document.createElement('div');
       el.className = prefix + field;
+      // tag hanzi so Android/Chrome picks Simplified Chinese glyph variants,
+      // not the Japanese ones, for characters shared between the scripts
+      if (field === 'hanzi') el.lang = 'zh-CN';
       el.textContent = t(entry[field]);
       card.appendChild(el);
     }
@@ -380,9 +420,14 @@
       const btn = document.createElement('button');
       btn.className = 'tab' + (i === 0 ? ' active' : '');
       btn.dataset.tab = tab.id;
+      btn.type = 'button';
+      btn.id = 'tabbtn-' + tab.id;
       btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-controls', 'tab-' + tab.id);
+      btn.setAttribute('aria-selected', String(i === 0));
       const hanzi = document.createElement('span');
       hanzi.className = 'tab-hanzi';
+      hanzi.lang = 'zh-CN';
       hanzi.textContent = tab.hanziLabel;
       btn.appendChild(hanzi);
       btn.appendChild(document.createTextNode(t(tab.label)));
@@ -446,6 +491,7 @@
     nameRow.appendChild(name);
     const hanzi = document.createElement('span');
     hanzi.className = 'app-hanzi';
+    hanzi.lang = 'zh-CN';
     hanzi.textContent = entry.hanzi;
     nameRow.appendChild(hanzi);
     const pinyin = document.createElement('div');
@@ -514,6 +560,8 @@
       const panel = document.createElement('div');
       panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
       panel.id = 'tab-' + tab.id;
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', 'tabbtn-' + tab.id);
       const label = document.createElement('div');
       label.className = 'panel-search-label';
       label.textContent = t(tab.label);
@@ -546,7 +594,7 @@
     const overlay = document.createElement('div');
     overlay.className = 'favorites-overlay';
     overlay.id = 'favorites-overlay';
-    overlay.innerHTML = '<div class="favorites-panel"><div class="favorites-header"><h2>收藏</h2><button class="fav-close" aria-label="Close">✕</button></div><div class="favorites-content" id="favorites-content"></div></div>';
+    overlay.innerHTML = '<div class="favorites-panel"><div class="favorites-header"><h2 lang="zh-CN">收藏</h2><button class="fav-close" aria-label="Close">✕</button></div><div class="favorites-content" id="favorites-content"></div></div>';
     return overlay;
   }
 
@@ -583,6 +631,8 @@
     });
     const si = document.getElementById('searchInput');
     if (si) si.placeholder = CHROME.searchPlaceholder[currentLang];
+    document.documentElement.style.setProperty(
+      '--quiz-hint', JSON.stringify(t(CHROME.quizHint)));
   }
 
   function rerenderContent() {
@@ -595,8 +645,7 @@
     panelsContainer.innerHTML = '';
     renderTabs(contentData.tabs, tabsContainer);
     renderPanels(contentData.tabs, panelsContainer);
-    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === activeId));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + activeId));
+    setActiveTab(activeId);
     wireTabs();
     wireCards();
   }
@@ -649,6 +698,9 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !aboutPanel.hidden) setAbout(false); });
 
   document.getElementById('favBtn').addEventListener('click', showFavorites);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.body.classList.contains('fav-open')) hideFavorites();
+  });
   document.addEventListener('click', e => {
     if (e.target.classList.contains('favorites-overlay') || e.target.classList.contains('fav-close')) {
       hideFavorites();
@@ -693,8 +745,7 @@
   }
 
   function switchToTab(targetId) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === targetId));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + targetId));
+    setActiveTab(targetId);
     if (window.speechSynthesis) window.speechSynthesis.cancel();
     document.querySelectorAll('.speaking').forEach(el => el.classList.remove('speaking'));
     document.querySelectorAll('.card.revealed, .phrase-card.revealed').forEach(c => c.classList.remove('revealed'));
@@ -849,7 +900,7 @@
   let currentCard = null;
   function speak(text, card) {
     if (!synth) {
-      alert('Text-to-speech is not supported in this browser.');
+      showToast(t(CHROME.ttsUnsupported));
       return;
     }
     synth.cancel();
@@ -879,6 +930,18 @@
     });
   }
 
+  // Enter / Space activate a card, matching its role="button".
+  // Delegated to the persistent #panels so it survives rerenderContent().
+  function wireCardKeys() {
+    document.getElementById('panels').addEventListener('keydown', e => {
+      if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+      const card = e.target.closest('.card, .phrase-card');
+      if (!card || e.target.closest('button')) return;
+      e.preventDefault(); // Space would otherwise scroll the page
+      handleCardClick(card);
+    });
+  }
+
   // Fetch content and render
   fetch('./content.json')
     .then(r => {
@@ -893,6 +956,7 @@
       wireCards();
       wireSwipe();
       wireLongPress();
+      wireCardKeys();
     })
     .catch(err => {
       const panels = document.getElementById('panels');
@@ -924,6 +988,7 @@
 
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (!hadController) { hadController = true; return; } // first install, nothing to refresh
+      showAppVersion();
       if (updateToast) {
         updateToast.hidden = false;
         void updateToast.offsetWidth;
@@ -940,6 +1005,8 @@
     }
 
     window.addEventListener('load', () => {
+      // first install: the cache only exists once the worker is active
+      navigator.serviceWorker.ready.then(showAppVersion).catch(() => {});
       navigator.serviceWorker.register('./sw.js').then(reg => {
         // Re-check for a new sw.js whenever the (installed) app comes back to the foreground.
         document.addEventListener('visibilitychange', () => {

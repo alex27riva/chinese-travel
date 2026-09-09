@@ -145,7 +145,7 @@ h1 {
   overflow: hidden;
   user-select: none;
   -webkit-user-select: none;
-  box-shadow: inset 0 1px 0 var(--surface-highlight);
+  box-shadow: inset 0 1px 0 var(--surface-highlight), 0 1px 2px var(--shadow);
 }
 
 .card::before {
@@ -164,13 +164,29 @@ h1 {
 }
 .card:hover::before { opacity: 1; }
 
-.card:active { transform: translateY(0); }
+.card:active,
+.phrase-card:active {
+  transform: scale(0.98);
+  transition: transform 0.08s ease;
+}
 
 .card.speaking {
   background: var(--speaking-bg);
   border-color: var(--accent-2);
 }
 .card.speaking::before { opacity: 1; }
+
+.card:focus-visible,
+.phrase-card:focus-visible,
+.tab:focus-visible,
+.favorite-btn:focus-visible,
+.toolbar button:focus-visible,
+.theme-btn:focus-visible,
+.lang-switch button:focus-visible,
+.fav-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 /* Card actions: speaker top-right, star bottom-right, each with a 36px hit area */
 .speaker,
@@ -260,6 +276,7 @@ h1 {
   .card .favorite-btn { width: 32px; height: 32px; right: 0.05rem; }
   .card .speaker { top: 0.15rem; }
   .card .favorite-btn { bottom: 0.15rem; }
+  [data-quiz="on"] .card:not(.revealed)::after { left: 0.9rem; right: 2.1rem; bottom: 0.8rem; }
   .hanzi { font-size: 1.8rem; }
   .pinyin { font-size: 0.7rem; letter-spacing: 0.05em; }
   .meaning { font-size: 0.8rem; }
@@ -284,7 +301,7 @@ h1 {
   overflow: hidden;
   user-select: none;
   -webkit-user-select: none;
-  box-shadow: inset 0 1px 0 var(--surface-highlight);
+  box-shadow: inset 0 1px 0 var(--surface-highlight), 0 1px 2px var(--shadow);
 }
 
 .phrase-card:hover {
@@ -292,7 +309,6 @@ h1 {
   box-shadow: inset 0 1px 0 var(--surface-highlight), 0 6px 20px var(--shadow);
   border-left-color: var(--accent);
 }
-.phrase-card:active { transform: translateY(0); }
 .phrase-card.speaking {
   background: var(--speaking-bg);
   border-left-color: var(--accent);
@@ -861,6 +877,26 @@ body.fav-open {
 [data-quiz="on"] .card:not(.revealed) .meaning,
 [data-quiz="on"] .phrase-card:not(.revealed) .phrase-pinyin,
 [data-quiz="on"] .phrase-card:not(.revealed) .phrase-meaning { visibility: hidden; }
+
+[data-quiz="on"] .card:not(.revealed)::after,
+[data-quiz="on"] .phrase-card:not(.revealed)::after {
+  content: var(--quiz-hint, "tap to reveal");
+  position: absolute;
+  left: 1.1rem;
+  right: 2.9rem;
+  bottom: 0.9rem;
+  padding-top: 0.3rem;
+  border-top: 1px dashed var(--line);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  color: var(--text-2);
+  opacity: 0.8;
+  pointer-events: none;
+}
+[data-quiz="on"] .phrase-card:not(.revealed)::after {
+  left: 1.2rem;
+  bottom: 0.95rem;
+}
 
 .quiz-btn {
   flex-shrink: 0;

@@ -1,6 +1,6 @@
 # UI & Visual Review
 
-Review date: 2026-09-09, against v0.11.1.
+Review date: 2026-09-09, against v0.11.1. Status updated through v0.16.0.
 
 Method: full read of `style.css` and `index.html`, plus layout checks in Chrome with the body constrained to a 390px column to approximate a phone. Colors below are judged from the CSS values (the test browser had forced dark mode on, so light-mode screenshots were not reliable).
 
@@ -97,13 +97,13 @@ Add a faint inset top highlight on cards in dark mode for edge definition, e.g. 
 
 ## 4. Micro-polish
 
-- **Press feedback.** Cards only reset `translateY` on `:active`. Add `transform: scale(0.98)` with an 80ms transition so a tap reads as a tap on a phone.
+- ~~**Press feedback.**~~ done in v0.16.0 (`scale(0.98)`, 80ms, on `.card` / `.phrase-card`).
 - ~~**Speaking state.**~~ done in v0.14.0 (speaker pulses while speaking).
-- **Quiz mode placeholder.** Unrevealed cards show empty space where pinyin and meaning were. Add a dashed "tap to reveal" line so the card does not look broken.
-- **Card radius.** 4px is a deliberate print / seal feel. Keep it, but soften: border at reduced opacity and a resting `0 1px 2px var(--shadow)` so cards do not read as a flat table.
+- ~~**Quiz mode placeholder.**~~ done in v0.16.0 (dashed `::after` line, label from `--quiz-hint`, EN/IT).
+- **Card radius.** 4px is a deliberate print / seal feel. Resting `0 1px 2px var(--shadow)` added in v0.16.0; the border-opacity half is still open.
 - **Tab active state.** Solid ink block × 5 tabs is heavy. Try a 2px red underline with ink text in the top strip; reserve solid fill for the bottom bar.
 - ~~**Search pill width.**~~ done in v0.13.0.
-- **Viewport meta.** Drop `maximum-scale=1.0, user-scalable=no`. iOS ignores it and it is an accessibility smell.
+- ~~**Viewport meta.**~~ done in v0.16.0.
 
 ---
 
@@ -130,13 +130,13 @@ Fixed in v0.10.2–v0.11.1: tone-insensitive search, iOS PNG icon, swipe guard i
 Still open:
 
 - ~~**Update toast.**~~ done in v0.15.0.
-- **Single version source.** `v0.x.y` in `index.html` and `handy-vNN` in `sw.js` are bumped by hand separately. Derive one from the other.
-- **`alert()` in `speak()`** blocks the UI when TTS is missing. Use the toast, or disable the speaker icons.
+- ~~**Single version source.**~~ done in v0.16.0. `CACHE = 'handy-v0.16.0'` in `sw.js` is the only literal; `showAppVersion()` reads it back via `caches.keys()`.
+- ~~**`alert()` in `speak()`**~~ done in v0.16.0 (toast, `CHROME.ttsUnsupported`).
 - **Missing zh voice detection.** With no `zh-*` voice, iOS reads hanzi with the default voice. Show a one-time hint pointing to Settings → Accessibility → Spoken Content.
-- **`lang="zh-CN"` on hanzi elements** so Android does not pick Japanese glyph variants for shared characters.
-- **Accessibility.** Cards are `div`s with click handlers: add `role="button"`, `tabindex="0"`, Enter / Space handling. Tabs lack `aria-selected`. Escape should close the favorites overlay.
+- ~~**`lang="zh-CN"` on hanzi elements**~~ done in v0.16.0 (all hanzi, incl. tab labels and static glyphs).
+- ~~**Accessibility.**~~ done in v0.16.0 (`role="button"` + `tabindex` + Enter/Space on cards, `aria-selected` / `aria-controls` / `role="tabpanel"`, Escape closes favorites, `:focus-visible` ring).
 - **Duplication.** Panel-reset logic exists in both `filterCards('')` and `handleCardClick`; `refreshFavoritesPanel` and `showFavorites` are near-identical.
 - **Content validator + CI.** Script that checks pinyin diacritics, `en`/`it` presence, and duplicate hanzi per tab; run on push.
 - **Content ideas.** Emergency numbers (110 / 120 / 119), show-mode (fullscreen hanzi), slow TTS on long-press, quiz shuffle, search-result highlight after navigation.
 - **Maskable icon** for Android adaptive icons.
-- **`.gitignore`** for `.DS_Store`.
+- ~~**`.gitignore`**~~ done in v0.16.0.

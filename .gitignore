@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+._*
+
+# editors
+.vscode/
+.idea/
+*.swp
+
+# local tooling
+node_modules/
