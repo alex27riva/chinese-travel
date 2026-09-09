@@ -14,7 +14,7 @@ Offline-ready PWA for Chinese vocabulary and phrases. No login, no account, no i
 - Medical — symptoms, pharmacy, hospital and emergency phrases
 - Apps — recommended Chinese apps with QR codes
 - Visa Free — countries with visa-free or visa-on-arrival access to China
-- Favorites — star any card to pin it across a dedicated tab
+- Favorites — star any card, review them in the ☆ overlay from the toolbar
 
 **UX**
 - Tap any card to hear native zh-CN TTS pronunciation
@@ -22,7 +22,7 @@ Offline-ready PWA for Chinese vocabulary and phrases. No login, no account, no i
 - Hide pinyin — study hanzi only
 - Dark mode
 - Collapsible sections
-- Search within any tab
+- Global search across all tabs — tone-mark and space insensitive (`nihao` finds `nǐ hǎo`)
 - Swipe left/right to switch tabs
 - EN / IT language toggle
 

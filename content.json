@@ -207,6 +207,86 @@
               ]
             }
           ]
+        },
+        {
+          "title": {"en": "Numbers", "it": "Numeri"},
+          "sections": [
+            {
+              "title": {"en": "0 – 10", "it": "0 – 10"},
+              "entries": [
+                {"hanzi": "零", "pinyin": "líng", "meaning": {"en": "Zero", "it": "Zero"}},
+                {"hanzi": "一", "pinyin": "yī", "meaning": {"en": "One", "it": "Uno"}},
+                {"hanzi": "二", "pinyin": "èr", "meaning": {"en": "Two (counting, phone numbers)", "it": "Due (contando, numeri di telefono)"}},
+                {"hanzi": "两", "pinyin": "liǎng", "meaning": {"en": "Two (before things: two people, two beers)", "it": "Due (davanti a cose: due persone, due birre)"}},
+                {"hanzi": "三", "pinyin": "sān", "meaning": {"en": "Three", "it": "Tre"}},
+                {"hanzi": "四", "pinyin": "sì", "meaning": {"en": "Four", "it": "Quattro"}},
+                {"hanzi": "五", "pinyin": "wǔ", "meaning": {"en": "Five", "it": "Cinque"}},
+                {"hanzi": "六", "pinyin": "liù", "meaning": {"en": "Six", "it": "Sei"}},
+                {"hanzi": "七", "pinyin": "qī", "meaning": {"en": "Seven", "it": "Sette"}},
+                {"hanzi": "八", "pinyin": "bā", "meaning": {"en": "Eight", "it": "Otto"}},
+                {"hanzi": "九", "pinyin": "jiǔ", "meaning": {"en": "Nine", "it": "Nove"}},
+                {"hanzi": "十", "pinyin": "shí", "meaning": {"en": "Ten", "it": "Dieci"}}
+              ]
+            },
+            {
+              "title": {"en": "Bigger numbers", "it": "Numeri più grandi"},
+              "entries": [
+                {"hanzi": "十一", "pinyin": "shí yī", "meaning": {"en": "Eleven (10 + 1)", "it": "Undici (10 + 1)"}},
+                {"hanzi": "二十", "pinyin": "èr shí", "meaning": {"en": "Twenty (2 × 10)", "it": "Venti (2 × 10)"}},
+                {"hanzi": "二十五", "pinyin": "èr shí wǔ", "meaning": {"en": "Twenty-five (2 × 10 + 5)", "it": "Venticinque (2 × 10 + 5)"}},
+                {"hanzi": "一百", "pinyin": "yì bǎi", "meaning": {"en": "One hundred", "it": "Cento"}},
+                {"hanzi": "两百", "pinyin": "liǎng bǎi", "meaning": {"en": "Two hundred", "it": "Duecento"}},
+                {"hanzi": "一千", "pinyin": "yì qiān", "meaning": {"en": "One thousand", "it": "Mille"}},
+                {"hanzi": "一万", "pinyin": "yí wàn", "meaning": {"en": "Ten thousand (Chinese counts in 万, not thousands)", "it": "Diecimila (il cinese conta in 万, non in migliaia)"}},
+                {"hanzi": "半", "pinyin": "bàn", "meaning": {"en": "Half", "it": "Metà / Mezzo"}},
+                {"hanzi": "第一", "pinyin": "dì yī", "meaning": {"en": "First (第 + number = ordinal)", "it": "Primo (第 + numero = ordinale)"}}
+              ]
+            },
+            {
+              "title": {"en": "Counting things", "it": "Contare le cose"},
+              "entries": [
+                {"hanzi": "个", "pinyin": "gè", "meaning": {"en": "General counter: 三个 = three (of anything)", "it": "Classificatore generico: 三个 = tre (di qualsiasi cosa)"}},
+                {"hanzi": "位", "pinyin": "wèi", "meaning": {"en": "Counter for people (polite): 两位 = two people", "it": "Classificatore per persone (cortese): 两位 = due persone"}},
+                {"hanzi": "张", "pinyin": "zhāng", "meaning": {"en": "Counter for tickets, flat things: 一张票 = one ticket", "it": "Classificatore per biglietti, cose piatte: 一张票 = un biglietto"}},
+                {"hanzi": "瓶", "pinyin": "píng", "meaning": {"en": "Bottle: 两瓶啤酒 = two beers", "it": "Bottiglia: 两瓶啤酒 = due birre"}},
+                {"hanzi": "杯", "pinyin": "bēi", "meaning": {"en": "Cup / glass: 一杯咖啡 = one coffee", "it": "Tazza / bicchiere: 一杯咖啡 = un caffè"}},
+                {"hanzi": "份", "pinyin": "fèn", "meaning": {"en": "Portion / order: 一份炒饭 = one fried rice", "it": "Porzione: 一份炒饭 = un riso saltato"}}
+              ]
+            },
+            {
+              "title": {"en": "Money", "it": "Denaro"},
+              "entries": [
+                {"hanzi": "钱", "pinyin": "qián", "meaning": {"en": "Money", "it": "Soldi"}},
+                {"hanzi": "人民币", "pinyin": "rén mín bì", "meaning": {"en": "RMB / Chinese yuan (¥)", "it": "RMB / Yuan cinese (¥)"}},
+                {"hanzi": "块", "pinyin": "kuài", "meaning": {"en": "Yuan (spoken): 十块 = ¥10", "it": "Yuan (parlato): 十块 = ¥10"}},
+                {"hanzi": "元", "pinyin": "yuán", "meaning": {"en": "Yuan (written, on price tags)", "it": "Yuan (scritto, sui cartellini)"}},
+                {"hanzi": "毛", "pinyin": "máo", "meaning": {"en": "0.1 yuan (spoken): 五块五毛 = ¥5.50", "it": "0,1 yuan (parlato): 五块五毛 = ¥5,50"}},
+                {"hanzi": "角", "pinyin": "jiǎo", "meaning": {"en": "0.1 yuan (written)", "it": "0,1 yuan (scritto)"}},
+                {"hanzi": "多少", "pinyin": "duō shǎo", "meaning": {"en": "How much / how many", "it": "Quanto / quanti"}},
+                {"hanzi": "一共", "pinyin": "yí gòng", "meaning": {"en": "In total", "it": "In totale"}},
+                {"hanzi": "找钱", "pinyin": "zhǎo qián", "meaning": {"en": "Give change", "it": "Dare il resto"}},
+                {"hanzi": "发票", "pinyin": "fā piào", "meaning": {"en": "Receipt / invoice", "it": "Ricevuta / fattura"}}
+              ]
+            },
+            {
+              "title": {"en": "Time", "it": "Tempo"},
+              "entries": [
+                {"hanzi": "点", "pinyin": "diǎn", "meaning": {"en": "O'clock: 三点 = 3:00", "it": "Ore: 三点 = le 3:00"}},
+                {"hanzi": "三点半", "pinyin": "sān diǎn bàn", "meaning": {"en": "Half past three (3:30)", "it": "Tre e mezza (3:30)"}},
+                {"hanzi": "分钟", "pinyin": "fēn zhōng", "meaning": {"en": "Minute(s)", "it": "Minuto/i"}},
+                {"hanzi": "小时", "pinyin": "xiǎo shí", "meaning": {"en": "Hour(s)", "it": "Ora/e"}},
+                {"hanzi": "几点?", "pinyin": "jǐ diǎn?", "meaning": {"en": "What time?", "it": "A che ora? / Che ore sono?"}},
+                {"hanzi": "现在", "pinyin": "xiàn zài", "meaning": {"en": "Now", "it": "Adesso"}},
+                {"hanzi": "今天", "pinyin": "jīn tiān", "meaning": {"en": "Today", "it": "Oggi"}},
+                {"hanzi": "明天", "pinyin": "míng tiān", "meaning": {"en": "Tomorrow", "it": "Domani"}},
+                {"hanzi": "昨天", "pinyin": "zuó tiān", "meaning": {"en": "Yesterday", "it": "Ieri"}},
+                {"hanzi": "上午", "pinyin": "shàng wǔ", "meaning": {"en": "Morning (a.m.)", "it": "Mattina"}},
+                {"hanzi": "下午", "pinyin": "xià wǔ", "meaning": {"en": "Afternoon (p.m.)", "it": "Pomeriggio"}},
+                {"hanzi": "晚上", "pinyin": "wǎn shàng", "meaning": {"en": "Evening / night", "it": "Sera / notte"}},
+                {"hanzi": "星期", "pinyin": "xīng qī", "meaning": {"en": "Week (星期一 = Monday … 星期天 = Sunday)", "it": "Settimana (星期一 = lunedì … 星期天 = domenica)"}}
+              ]
+            }
+          ]
         }
       ]
     },

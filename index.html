@@ -14,25 +14,22 @@
 <link rel="manifest" href="./manifest.json">
 
 <!-- Inline SVG favicon / app icon (red seal with 中) -->
-<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%23c0392b'/><text x='90' y='128' font-size='110' text-anchor='middle' font-family='PingFang SC,sans-serif' font-weight='700' fill='%23f5efe3'>汉</text></svg>">
+<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
 <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%23c0392b'/><text x='90' y='128' font-size='110' text-anchor='middle' font-family='PingFang SC,sans-serif' font-weight='700' fill='%23f5efe3'>汉</text></svg>">
 
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
-<button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode"></button>
-<div class="lang-switch" role="group" aria-label="Language">
-  <button data-lang="en" type="button">EN</button>
-  <button data-lang="it" type="button">IT</button>
-</div>
-
 <header>
+  <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode"></button>
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button data-lang="en" type="button">EN</button>
+    <button data-lang="it" type="button">IT</button>
+  </div>
   <div class="header-rule"></div>
   <h1>Hàndy</h1>
   <p class="subtitle" data-i18n="subtitle">Essential Chinese for apps, food, travel & visa-free destinations</p>
-  <p class="subtitle" style="margin-top:0.1rem; font-size:0.75rem; color:var(--text-muted);" title="'hàn' (汉) = Chinese + 'handy' = useful">hàn + handy</p>
-  <p class="subtitle" style="margin-top:0.3rem; font-size:0.8rem;" data-i18n="tapHint">🔊 Tap any card to hear it spoken</p>
 </header>
 
 <div class="install-hint" id="installHint">
@@ -55,11 +52,21 @@
   </button>
   <button class="pinyin-btn" id="pinyinBtn" aria-label="Toggle pinyin" title="Hide/show pinyin">拼</button>
   <button class="quiz-btn" id="quizBtn" aria-label="Toggle quiz mode" title="Quiz mode">?</button>
+  <button class="about-btn" id="aboutBtn" aria-label="About and tips" aria-expanded="false" title="About">i</button>
+  <div class="about-panel" id="aboutPanel" hidden>
+    <div class="about-name">hàn <span class="about-hanzi">汉</span> + handy</div>
+    <div class="about-tagline" data-i18n="aboutTagline">hàn = Chinese · handy = useful</div>
+    <ul class="about-tips" data-i18n-html="aboutTips"></ul>
+  </div>
 </div>
 <div id="panels"></div>
 
 
-<div class="app-version" aria-hidden="true">v0.10.1</div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<button class="toast toast-update" id="updateToast" type="button" hidden>
+  <span aria-hidden="true">↻</span> <span data-i18n="updateReady">New version ready · tap to reload</span>
+</button>
+<div class="app-version" aria-hidden="true">v0.15.0</div>
 
 <script>
   // Show install hint only on iOS/Android, hide if standalone or dismissed
@@ -163,9 +170,19 @@
   } catch (e) {}
   document.documentElement.dataset.theme = currentTheme;
 
+  // Keep the browser/OS chrome (Android status bar, iOS Safari tint) matching the page background.
+  function syncThemeColor() {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) return;
+    const bg = getComputedStyle(document.documentElement).getPropertyValue('--surface').trim();
+    meta.content = bg || (currentTheme === 'dark' ? '#12100d' : '#f5efe3');
+  }
+  syncThemeColor();
+
   function setTheme(theme) {
     currentTheme = theme;
     document.documentElement.dataset.theme = theme;
+    syncThemeColor();
     try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
     const btn = document.getElementById('themeBtn');
     if (btn) btn.textContent = theme === 'dark' ? '☀︎' : '☾';
@@ -200,6 +217,10 @@
   }
 
   function handleCardClick(card) {
+    if (card.dataset.longPressed) {
+      delete card.dataset.longPressed;
+      return;
+    }
     if (document.getElementById('panels').classList.contains('global-search')) {
       const tabId = card.dataset.tab;
       if (tabId) {
@@ -240,9 +261,35 @@
       en: 'Essential Chinese for apps, food, travel & visa-free destinations',
       it: 'Cinese essenziale per app, cibo, viaggi e destinazioni senza visto'
     },
-    tapHint: {
-      en: '🔊 Tap any card to hear it spoken',
-      it: '🔊 Tocca una carta per ascoltarla'
+    aboutTagline: {
+      en: 'hàn (汉) = Chinese · handy = useful',
+      it: 'hàn (汉) = cinese · handy = utile'
+    },
+    aboutTips: {
+      en: '<li><strong>Tap</strong> a card to hear it spoken</li>'
+        + '<li><strong>Hold</strong> a card to copy the hanzi</li>'
+        + '<li><strong>Swipe</strong> left / right to change tab</li>'
+        + '<li><strong>☆</strong> saves a card to Favorites</li>'
+        + '<li><strong>拼</strong> hides pinyin · <strong>?</strong> starts quiz mode</li>'
+        + '<li>Works fully <strong>offline</strong> once installed</li>',
+      it: '<li><strong>Tocca</strong> una carta per ascoltarla</li>'
+        + '<li><strong>Tieni premuto</strong> per copiare gli hanzi</li>'
+        + '<li><strong>Scorri</strong> a sinistra / destra per cambiare scheda</li>'
+        + '<li><strong>☆</strong> salva una carta nei Preferiti</li>'
+        + '<li><strong>拼</strong> nasconde il pinyin · <strong>?</strong> avvia la modalità quiz</li>'
+        + '<li>Funziona completamente <strong>offline</strong> una volta installata</li>'
+    },
+    copied: {
+      en: 'Copied',
+      it: 'Copiato'
+    },
+    copyFailed: {
+      en: 'Copy not available',
+      it: 'Copia non disponibile'
+    },
+    updateReady: {
+      en: 'New version ready · tap to reload',
+      it: 'Nuova versione pronta · tocca per ricaricare'
     },
     installHint: {
       en: '<strong>Works offline!</strong> Tap Safari\'s Share button → <strong>Add to Home Screen</strong> to install as an app. Perfect for your trip.',
@@ -255,10 +302,6 @@
     installBtnLabel: {
       en: 'Install',
       it: 'Installa'
-    },
-    favoritesLabel: {
-      en: 'Favorites',
-      it: 'Preferiti'
     },
     favoritesEmpty: {
       en: 'Tap the ☆ on any card to save it here.',
@@ -288,6 +331,14 @@
     return field[currentLang] || field.en || Object.values(field)[0] || '';
   }
 
+  // Fold for search: lowercase, strip pinyin tone marks (nǐ → ni), drop spaces
+  // so "ni hao", "nihao" and "nǐ hǎo" all match the same card.
+  const foldSearch = str => String(str || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/\s+/g, '');
+
   const fieldPrefix = cls => cls === 'phrase-card' ? 'phrase-' : '';
   const gridClass = cls => cls === 'phrase-card' ? 'phrase-grid' : 'grid';
 
@@ -306,7 +357,7 @@
     icon.innerHTML = SPEAKER_SVG;
     card.appendChild(icon);
 
-    card.dataset.search = [entry.hanzi, entry.pinyin, t(entry.meaning)].join(' ').toLowerCase();
+    card.dataset.search = foldSearch([entry.hanzi, entry.pinyin, t(entry.meaning)].join(' '));
     card.dataset.tab = tabId;
 
     const star = document.createElement('button');
@@ -405,7 +456,7 @@
     desc.textContent = t(entry.description);
     content.append(nameRow, pinyin, desc);
     card.append(icon, content);
-    card.dataset.search = [entry.hanzi, entry.pinyin, entry.name, t(entry.description)].join(' ').toLowerCase();
+    card.dataset.search = foldSearch([entry.hanzi, entry.pinyin, entry.name, t(entry.description)].join(' '));
     card.dataset.tab = tabId;
     return card;
   }
@@ -421,7 +472,6 @@
     let total = 0;
     if (contentData) {
       contentData.tabs.forEach(tab => {
-        if (tab.id === 'favorites') return;
         const groups = tab.subsections || [{ sections: tab.sections }];
         const entries = [];
         groups.forEach(g => g.sections.forEach(s => s.entries.forEach(e => {
@@ -468,9 +518,7 @@
       label.className = 'panel-search-label';
       label.textContent = t(tab.label);
       panel.appendChild(label);
-      if (tab.id === 'favorites') {
-        renderFavoritesContent(panel);
-      } else if (tab.cardClass === 'app-card' && tab.intro) {
+      if (tab.cardClass === 'app-card' && tab.intro) {
         renderAppIntro(tab.intro, panel);
         tab.sections.forEach(sec => {
           const section = document.createElement('div');
@@ -588,6 +636,18 @@
 
   applyChrome();
 
+  const aboutBtn = document.getElementById('aboutBtn');
+  const aboutPanel = document.getElementById('aboutPanel');
+  function setAbout(open) {
+    aboutPanel.hidden = !open;
+    aboutBtn.classList.toggle('active', open);
+    aboutBtn.setAttribute('aria-expanded', String(open));
+  }
+  aboutBtn.addEventListener('click', e => { e.stopPropagation(); setAbout(aboutPanel.hidden); });
+  aboutPanel.addEventListener('click', e => e.stopPropagation());
+  document.addEventListener('click', () => { if (!aboutPanel.hidden) setAbout(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !aboutPanel.hidden) setAbout(false); });
+
   document.getElementById('favBtn').addEventListener('click', showFavorites);
   document.addEventListener('click', e => {
     if (e.target.classList.contains('favorites-overlay') || e.target.classList.contains('fav-close')) {
@@ -596,7 +656,7 @@
   });
 
   function filterCards(query) {
-    const q = query.trim().toLowerCase();
+    const q = foldSearch(query);
     const panelsEl = document.getElementById('panels');
     const clearBtn = document.getElementById('searchClear');
     if (clearBtn) clearBtn.hidden = !q;
@@ -657,6 +717,7 @@
       startY = e.touches[0].clientY;
     }, { passive: true });
     panels.addEventListener('touchend', e => {
+      if (document.body.classList.contains('fav-open')) return;
       const dx = e.changedTouches[0].clientX - startX;
       const dy = e.changedTouches[0].clientY - startY;
       if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
@@ -668,6 +729,106 @@
         tabs[nextIdx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       }
     }, { passive: true });
+  }
+
+  // Toast
+  let toastTimer = null;
+  function showToast(text) {
+    const el = document.getElementById('toast');
+    if (!el) return;
+    el.textContent = text;
+    el.hidden = false;
+    void el.offsetWidth; // force reflow so the opacity transition runs
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      el.classList.remove('show');
+      setTimeout(() => { if (!el.classList.contains('show')) el.hidden = true; }, 250);
+    }, 1600);
+  }
+
+  // Copy hanzi: long-press any card.
+  // iOS Safari only honours clipboard writes made synchronously inside a
+  // user-activation handler (pointerup / touchend), never from a timer. So the
+  // long-press timer only ARMS the card; the actual write happens on release.
+  function execCommandCopy(text) {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, text.length);
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) { return false; }
+  }
+
+  // Must be called synchronously from a user-gesture event handler.
+  function copyText(text) {
+    const done = ok => showToast(ok ? t(CHROME.copied) + ' · ' + text : t(CHROME.copyFailed));
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(() => done(true))
+        .catch(() => done(execCommandCopy(text)));
+    } else {
+      done(execCommandCopy(text));
+    }
+  }
+
+  function cardHanzi(card) {
+    const el = card.querySelector('.hanzi, .phrase-hanzi, .app-hanzi');
+    return el ? el.textContent.trim() : '';
+  }
+
+  const LONG_PRESS_MS = 500;
+  const LONG_PRESS_MOVE_PX = 10;
+  function wireLongPress() {
+    const panels = document.getElementById('panels');
+    let timer = null, card = null, armed = null, x0 = 0, y0 = 0;
+    const reset = () => {
+      clearTimeout(timer); timer = null; card = null;
+      if (armed) armed.classList.remove('copy-armed');
+      armed = null;
+    };
+    panels.addEventListener('pointerdown', e => {
+      if (e.button !== 0) return;
+      const target = e.target.closest('.card, .phrase-card, .app-card');
+      if (!target || e.target.closest('button')) return;
+      reset();
+      card = target; x0 = e.clientX; y0 = e.clientY;
+      timer = setTimeout(() => {
+        timer = null;
+        armed = card;
+        armed.classList.add('copy-armed');
+        if (navigator.vibrate) navigator.vibrate(30);
+      }, LONG_PRESS_MS);
+    });
+    panels.addEventListener('pointermove', e => {
+      if (!timer && !armed) return;
+      if (Math.abs(e.clientX - x0) > LONG_PRESS_MOVE_PX || Math.abs(e.clientY - y0) > LONG_PRESS_MOVE_PX) reset();
+    });
+    panels.addEventListener('pointerup', () => {
+      if (armed) {
+        const c = armed;
+        const text = cardHanzi(c);
+        c.dataset.longPressed = '1';
+        c.classList.add('copied');
+        setTimeout(() => c.classList.remove('copied'), 400);
+        reset();
+        if (text) copyText(text); // synchronous: still inside the user gesture
+        return;
+      }
+      reset();
+    });
+    panels.addEventListener('pointercancel', reset);
+    panels.addEventListener('pointerleave', reset);
+    panels.addEventListener('contextmenu', e => {
+      if (e.target.closest('.card, .phrase-card, .app-card')) e.preventDefault();
+    });
   }
 
   // TTS
@@ -731,6 +892,7 @@
       wireTabs();
       wireCards();
       wireSwipe();
+      wireLongPress();
     })
     .catch(err => {
       const panels = document.getElementById('panels');
@@ -751,10 +913,39 @@
     si.focus();
   });
 
-  // Register service worker for offline support
+  // Register service worker for offline support.
+  // sw.js calls skipWaiting() + clients.claim(), so a new worker takes control of
+  // this page as soon as it installs. That fires `controllerchange`; the page's
+  // already-loaded assets are stale at that point, so we offer a reload.
   if ('serviceWorker' in navigator) {
+    const updateToast = document.getElementById('updateToast');
+    let hadController = !!navigator.serviceWorker.controller; // false on first install
+    let reloading = false;
+
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!hadController) { hadController = true; return; } // first install, nothing to refresh
+      if (updateToast) {
+        updateToast.hidden = false;
+        void updateToast.offsetWidth;
+        updateToast.classList.add('show');
+      }
+    });
+
+    if (updateToast) {
+      updateToast.addEventListener('click', () => {
+        if (reloading) return;
+        reloading = true;
+        location.reload();
+      });
+    }
+
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').catch(err => {
+      navigator.serviceWorker.register('./sw.js').then(reg => {
+        // Re-check for a new sw.js whenever the (installed) app comes back to the foreground.
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'visible') reg.update().catch(() => {});
+        });
+      }).catch(err => {
         console.warn('SW registration failed:', err);
       });
     });

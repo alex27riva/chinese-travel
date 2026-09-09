@@ -1,5 +1,5 @@
-const CACHE = 'handy-v25';
-const ASSETS = ['./', './index.html', './content.json', './style.css', './manifest.json', './icon.svg'];
+const CACHE = 'handy-v35';
+const ASSETS = ['./', './index.html', './content.json', './style.css', './manifest.json', './icon.svg', './apple-touch-icon.png'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
